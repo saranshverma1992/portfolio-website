@@ -140,6 +140,27 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    // Interactive 3D tilt for Hero Title on hover
+    const heroTitle = document.querySelector('.hero-title-new');
+    if (heroTitle) {
+        heroTitle.addEventListener('mousemove', (e) => {
+            const rect = heroTitle.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            
+            const rotX = ((y / rect.height) * 12 - 6).toFixed(1);
+            const rotY = ((6 - (x / rect.width) * 12)).toFixed(1);
+            
+            heroTitle.style.transform = `perspective(1000px) rotateX(${rotX}deg) rotateY(${rotY}deg) translateZ(10px)`;
+            heroTitle.style.textShadow = `${-rotY * 0.6}px ${rotX * 0.6}px 12px rgba(168, 85, 247, 0.15)`;
+        });
+        
+        heroTitle.addEventListener('mouseleave', () => {
+            heroTitle.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) translateZ(0)';
+            heroTitle.style.textShadow = 'none';
+        });
+    }
+
     // ==========================================================================
     // REVEAL ANIMATIONS (INTERSECTION OBSERVER)
     // ==========================================================================
@@ -382,5 +403,118 @@ document.addEventListener('DOMContentLoaded', () => {
         };
 
         startAutoScrollTestimonials();
+    }
+
+    // ==========================================================================
+    // INTERACTIVE PARTICLE VORTEX BACKGROUND (LIFTOFF ANIMATION)
+    // ==========================================================================
+    const canvas = document.getElementById('particleCanvas');
+    if (canvas) {
+        const ctx = canvas.getContext('2d');
+        let width = canvas.width = window.innerWidth;
+        let height = canvas.height = window.innerHeight;
+
+        const particleCount = 380;
+        
+        // Define theme-aware color arrays matching Saransh's premium palette (much brighter)
+        const colors = [
+            'rgba(168, 85, 247, 0.85)', // Bright Purple
+            'rgba(59, 130, 246, 0.85)',  // Bright Blue
+            'rgba(147, 51, 234, 0.75)',  // Deep Violet
+            'rgba(96, 165, 250, 0.75)'   // Sky Blue
+        ];
+
+        class Particle {
+            constructor() {
+                this.reset();
+            }
+
+            reset() {
+                // Radial initialization (spawning from center to simulate liftoff burst)
+                this.angle = Math.random() * Math.PI * 2;
+                this.distance = Math.random() * (Math.min(width, height) * 0.45) + 10;
+                this.x = width / 2 + Math.cos(this.angle) * this.distance;
+                this.y = height / 2 + Math.sin(this.angle) * this.distance;
+                
+                this.speed = Math.random() * 1.5 + 0.8;
+                this.size = Math.random() * 2.5 + 1.5;
+                this.color = colors[Math.floor(Math.random() * colors.length)];
+                // Create elongated streaking particles based on speed for depth
+                this.length = Math.random() * 25 + 10;
+                this.opacity = Math.random() * 0.65 + 0.35;
+            }
+
+            update() {
+                // Particle physics: swirl & drift outward radially
+                this.angle += 0.0018; 
+                this.distance += this.speed * 1.25;
+                
+                this.x = width / 2 + Math.cos(this.angle) * this.distance;
+                this.y = height / 2 + Math.sin(this.angle) * this.distance;
+
+                // Fade out as they reach viewport boundaries
+                if (this.distance > Math.max(width, height) * 0.8 || this.x < 0 || this.x > width || this.y < 0 || this.y > height) {
+                    this.reset();
+                }
+            }
+
+            draw() {
+                ctx.save();
+                ctx.globalAlpha = this.opacity;
+                ctx.beginPath();
+                // Draw streaking dash/oval coordinates pointing outward from center
+                const targetX = this.x - Math.cos(this.angle) * this.length;
+                const targetY = this.y - Math.sin(this.angle) * this.length;
+                
+                ctx.strokeStyle = this.color;
+                ctx.lineWidth = this.size;
+                ctx.lineCap = 'round';
+                ctx.moveTo(this.x, this.y);
+                ctx.lineTo(targetX, targetY);
+                ctx.stroke();
+                ctx.restore();
+            }
+        }
+
+        const particles = [];
+        // Initialize particles array
+        for (let i = 0; i < particleCount; i++) {
+            particles.push(new Particle());
+            // Pre-warm distribution so they don't all burst from center at once on page load
+            particles[i].distance = Math.random() * Math.max(width, height) * 0.7;
+        }
+
+        let animationFrameId;
+        function animate() {
+            ctx.clearRect(0, 0, width, height);
+
+            // Fetch dynamic light vs dark theme status to adjust canvas overlay slightly
+            const currentTheme = document.documentElement.getAttribute('data-theme') || 'dark';
+            if (currentTheme === 'light') {
+                ctx.fillStyle = 'rgba(255, 255, 255, 0.05)';
+                ctx.fillRect(0, 0, width, height);
+            }
+
+            particles.forEach(p => {
+                p.update();
+                p.draw();
+            });
+
+            // Adjust flow pattern slightly when cursor moves (Parallax tilt response)
+            let dx = (mouseX - width / 2) * 0.05;
+            let dy = (mouseY - height / 2) * 0.05;
+            canvas.style.transform = `translate3d(${dx}px, ${dy}px, 0)`;
+
+            animationFrameId = requestAnimationFrame(animate);
+        }
+
+        animate();
+
+        // Handle window resizing
+        window.addEventListener('resize', () => {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
+            particles.forEach(p => p.reset());
+        });
     }
 });
