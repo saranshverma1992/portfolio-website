@@ -215,7 +215,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // Native download of resume.pdf is handled directly by the anchor tag in index.html.
+    // Native download of Saransh-Verma-CV.pdf is handled directly by the anchor tag in index.html.
 
     // ==========================================================================
     // IMPACT NUMBERS COUNT UP ON SCROLL
@@ -256,9 +256,9 @@ document.addEventListener('DOMContentLoaded', () => {
         counterObserver.observe(counter);
     });
 
-    // Workflow Cards Mouse Spotlight Effect
-    const workflowCards = document.querySelectorAll('.workflow-card');
-    workflowCards.forEach(card => {
+    // Accordion Items Mouse Spotlight Effect
+    const accordionItems = document.querySelectorAll('.accordion-item');
+    accordionItems.forEach(card => {
         card.addEventListener('mousemove', (e) => {
             const rect = card.getBoundingClientRect();
             const x = e.clientX - rect.left;
@@ -293,60 +293,53 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Workflow Track Auto Slider & Drag-to-Scroll
-    const trackWrapper = document.querySelector('.workflow-track-wrapper');
-    if (trackWrapper) {
-        let isDown = false;
-        let startX;
-        let scrollLeftVal;
-        let isHovered = false;
-        let scrollTimer = null;
+    // Workflow Accordion Toggle & Auto-Play Logic
+    const accordionContainer = document.querySelector('.workflow-accordion');
+    const accordionItemsList = document.querySelectorAll('.workflow-accordion .accordion-item');
+    const accordionHeaders = document.querySelectorAll('.workflow-accordion .accordion-header');
+    
+    let accordionActiveIndex = 0; 
+    let accordionTimer = null;
+    let isAccordionHovered = false;
 
-        // Hover tracking to pause auto-scroll
-        trackWrapper.addEventListener('mouseenter', () => { isHovered = true; });
-        trackWrapper.addEventListener('mouseleave', () => { isHovered = false; });
-
-        // Mouse Drag to Scroll
-        trackWrapper.addEventListener('mousedown', (e) => {
-            isDown = true;
-            trackWrapper.classList.add('active-grab');
-            startX = e.pageX - trackWrapper.offsetLeft;
-            scrollLeftVal = trackWrapper.scrollLeft;
+    const setActiveAccordionItem = (index) => {
+        accordionItemsList.forEach((item, i) => {
+            if (i === index) {
+                item.classList.add('active');
+            } else {
+                item.classList.remove('active');
+            }
         });
+        accordionActiveIndex = index;
+    };
 
-        trackWrapper.addEventListener('mouseleave', () => {
-            isDown = false;
-            trackWrapper.classList.remove('active-grab');
+    const startAccordionAutoPlay = () => {
+        accordionTimer = setInterval(() => {
+            if (isAccordionHovered) return;
+            let nextIndex = (accordionActiveIndex + 1) % accordionItemsList.length;
+            setActiveAccordionItem(nextIndex);
+        }, 4000);
+    };
+
+    // Header click logic
+    accordionHeaders.forEach((header, index) => {
+        header.addEventListener('click', () => {
+            setActiveAccordionItem(index);
         });
+    });
 
-        trackWrapper.addEventListener('mouseup', () => {
-            isDown = false;
-            trackWrapper.classList.remove('active-grab');
+    // Pause on hover
+    if (accordionContainer) {
+        accordionContainer.addEventListener('mouseenter', () => {
+            isAccordionHovered = true;
         });
-
-        trackWrapper.addEventListener('mousemove', (e) => {
-            if (!isDown) return;
-            e.preventDefault();
-            const x = e.pageX - trackWrapper.offsetLeft;
-            const walk = (x - startX) * 1.5; // Scroll speed multiplier
-            trackWrapper.scrollLeft = scrollLeftVal - walk;
+        accordionContainer.addEventListener('mouseleave', () => {
+            isAccordionHovered = false;
         });
-
-        // Auto Slider Animation Loop
-        const startAutoScroll = () => {
-            scrollTimer = setInterval(() => {
-                if (isHovered || isDown) return;
-                const maxScrollLeft = trackWrapper.scrollWidth - trackWrapper.clientWidth;
-                if (trackWrapper.scrollLeft >= maxScrollLeft - 10) {
-                    trackWrapper.scrollTo({ left: 0, behavior: 'smooth' });
-                } else {
-                    trackWrapper.scrollBy({ left: 360, behavior: 'smooth' });
-                }
-            }, 4000);
-        };
-
-        startAutoScroll();
     }
+
+    // Start auto cycle
+    startAccordionAutoPlay();
 
     // Testimonials Track Auto Slider & Drag-to-Scroll
     const testimonialsWrapper = document.querySelector('.testimonials-track-wrapper');
