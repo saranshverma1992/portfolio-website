@@ -1,0 +1,1370 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Saransh — Lead Product Designer Portfolio</title>
+    <meta name="description"
+        content="Storytelling portfolio of Saransh, a Lead Product Designer with 9+ years of experience simplifying complexity in SaaS, AI, and workflow automation.">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+
+    <!-- Custom Cursor Glow -->
+    <div class="cursor-glow" id="cursorGlow"></div>
+    <div class="custom-cursor" id="customCursor">
+        <div class="cursor-dot"></div>
+        <div class="cursor-label">Lead Product Designer</div>
+    </div>
+
+    <!-- Scroll Progress Indicator -->
+    <div class="scroll-progress" id="scrollProgress"></div>
+
+    <!-- Background Gradients & Grids -->
+    <div class="bg-grid-pattern"></div>
+    <div class="bg-abstract-waves">
+        <svg viewBox="0 0 1440 800" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path class="wave-path wave-1"
+                d="M0 200 C 360 100, 720 300, 1080 150 C 1260 75, 1380 125, 1440 150 L 1440 800 L 0 800 Z"
+                fill="url(#wave-grad-1)" opacity="0.08" />
+            <path class="wave-path wave-2"
+                d="M0 350 C 360 450, 720 250, 1080 400 C 1260 475, 1380 425, 1440 400 L 1440 800 L 0 800 Z"
+                fill="url(#wave-grad-2)" opacity="0.05" />
+            <defs>
+                <linearGradient id="wave-grad-1" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="var(--color-purple)" />
+                    <stop offset="100%" stop-color="transparent" />
+                </linearGradient>
+                <linearGradient id="wave-grad-2" x1="100%" y1="0%" x2="0%" y2="100%">
+                    <stop offset="0%" stop-color="var(--color-blue)" />
+                    <stop offset="100%" stop-color="transparent" />
+                </linearGradient>
+            </defs>
+        </svg>
+    </div>
+    <div class="bg-glow bg-glow-1"></div>
+    <div class="bg-glow bg-glow-2"></div>
+    <div class="bg-glow bg-glow-3"></div>
+
+    <!-- Navigation Header -->
+    <header class="main-header">
+        <nav class="nav-container">
+            <a href="#" class="nav-logo" id="navLogo">
+                <span class="logo-dot"></span>
+                <span class="logo-text">Saransh.</span>
+                <span class="nav-status-badge">
+                    <span class="status-pulse"></span>
+                    Immediate Joiner
+                </span>
+            </a>
+            <div class="nav-links">
+                <a href="#ai-workflow" class="nav-link">Workflow</a>
+                <a href="#approach" class="nav-link">Approach</a>
+                <a href="#projects" class="nav-link">Work</a>
+                <a href="#leadership" class="nav-link">Leadership</a>
+                <a href="#impact" class="nav-link">Impact</a>
+                <!-- Theme Switch -->
+                <button class="theme-toggle" id="themeToggle" aria-label="Toggle Theme">
+                    <svg class="sun-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="4"></circle>
+                        <path
+                            d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41">
+                        </path>
+                    </svg>
+                    <svg class="moon-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"></path>
+                    </svg>
+                </button>
+                <a href="#contact" class="nav-link nav-btn">Let's Talk</a>
+            </div>
+            <button class="mobile-menu-toggle" aria-label="Toggle Menu">
+                <span></span>
+                <span></span>
+            </button>
+        </nav>
+    </header>
+
+    <!-- Mobile Nav Overlay -->
+    <div class="mobile-nav-overlay">
+        <div class="mobile-nav-links">
+            <a href="#ai-workflow" class="mobile-nav-link">Workflow</a>
+            <a href="#approach" class="mobile-nav-link">Approach</a>
+            <a href="#projects" class="mobile-nav-link">Work</a>
+            <a href="#leadership" class="mobile-nav-link">Leadership</a>
+            <a href="#impact" class="mobile-nav-link">Impact</a>
+            <div class="mobile-theme-wrapper">
+                <span>Theme Toggle</span>
+                <button class="theme-toggle" id="mobileThemeToggle" aria-label="Toggle Theme">
+                    <svg class="sun-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="4"></circle>
+                        <path
+                            d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41">
+                        </path>
+                    </svg>
+                    <svg class="moon-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"></path>
+                    </svg>
+                </button>
+            </div>
+            <a href="#contact" class="mobile-nav-link mobile-btn">Let's Talk</a>
+        </div>
+    </div>
+
+    <main>
+
+        <!-- SECTION 01: THE OPENING SCENE -->
+        <section class="hero-section" id="hero">
+            <div class="hero-grid-overlay"></div>
+            <div class="container">
+                <div class="hero-main-grid animate-on-load">
+                    <div class="hero-text-block">
+                        <div class="hero-bubble-wrapper">
+                            <span class="hero-bubble">Hi 👋</span>
+                        </div>
+                        <h1 class="hero-title">
+                            I'm Saransh.<br>
+                            <span class="gradient-text">Lead Product Designer</span>
+                        </h1>
+                        <p class="hero-subheadline">
+                            Lead Product Designer with 9+ years of experience crafting scalable B2B SaaS, enterprise,
+                            and AI-driven products that improve efficiency, adoption, and business outcomes.
+                        </p>
+                    </div>
+
+                    <div class="hero-avatar-block">
+                        <!-- Design Workbench Canvas Area -->
+                        <div class="canvas-workbench">
+                            <div class="canvas-grid-lines"></div>
+                            <!-- Floating Node 1: User First Mindset -->
+                            <div class="canvas-node node-mindset animate-node-1">
+                                <div class="node-tag">Principles</div>
+                                <div class="node-content-row">
+                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
+                                        stroke="var(--color-purple)" stroke-width="2">
+                                        <path
+                                            d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z">
+                                        </path>
+                                    </svg>
+                                    <span>User first mindset always</span>
+                                </div>
+                            </div>
+
+                            <!-- Floating Node 2: Idea to Implementation -->
+                            <div class="canvas-node node-execution animate-node-4">
+                                <div class="node-tag">Process</div>
+                                <div class="node-content-row">
+                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
+                                        stroke="var(--color-blue)" stroke-width="2">
+                                        <polyline points="16 18 22 12 16 6"></polyline>
+                                        <polyline points="8 6 2 12 8 18"></polyline>
+                                    </svg>
+                                    <span>Idea to Implementation</span>
+                                </div>
+                            </div>
+
+                            <div class="profile-card-wrapper">
+                                <div class="profile-card" id="profileCard">
+                                    <div class="profile-glow"></div>
+                                    <img src="profile.jpg" alt="Saransh - Lead Product Designer" class="profile-image">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Horizontal Hero Projects Preview Grid -->
+                <div class="hero-previews-container animate-on-load">
+                    <div class="preview-header">
+                        <span class="preview-title">Quick Work Preview</span>
+                        <span class="preview-line"></span>
+                    </div>
+                    <div class="hero-previews-grid">
+                        <a href="#projects" class="hero-preview-item">
+                            <div class="preview-img-box">
+                                <img src="simplify_logo.png" alt="Simplify Logo">
+                            </div>
+                            <div class="preview-info">
+                                <h4>Simplify</h4>
+                                <p>Workflow Automation</p>
+                            </div>
+                        </a>
+                        <a href="#projects" class="hero-preview-item">
+                            <div class="preview-img-box">
+                                <img src="klass_logo.png" alt="Klass Logo">
+                            </div>
+                            <div class="preview-info">
+                                <h4>Klass</h4>
+                                <p>Education SaaS</p>
+                            </div>
+                        </a>
+                        <a href="#projects" class="hero-preview-item">
+                            <div class="preview-img-box">
+                                <img src="nuenet_logo.png" alt="Nue Net. Logo">
+                            </div>
+                            <div class="preview-info">
+                                <h4>Nue Net.</h4>
+                                <p>Enterprise UX</p>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="scroll-cue animate-on-load">
+                    <a href="#stats" class="scroll-indicator">
+                        <span class="scroll-text">Scroll to explore the journey</span>
+                        <svg class="scroll-icon" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12 5V19M12 19L5 12M12 19L19 12" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- NEW SECTION: PROFESSIONAL IMPACT STATISTICS -->
+        <section class="stats-section" id="stats">
+            <div class="container">
+                <div class="section-label reveal-item">Track Record</div>
+                <h2 class="section-title reveal-item">Designed for Enterprise Scale & Business Impact</h2>
+
+                <div class="stats-grid">
+                    <!-- Stat Card 1 -->
+                    <div class="stat-card reveal-item">
+                        <div class="stat-icon">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--color-purple)"
+                                stroke-width="2">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <polyline points="12 6 12 12 16 14"></polyline>
+                            </svg>
+                        </div>
+                        <div class="stat-number"><span class="counter" data-target="9">0</span>+</div>
+                        <div class="stat-title">Years Experience</div>
+                        <p class="stat-desc">Leading end-to-end design strategy for complex ecosystems.</p>
+                    </div>
+
+                    <!-- Stat Card 2 -->
+                    <div class="stat-card reveal-item">
+                        <div class="stat-icon">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--color-blue)"
+                                stroke-width="2">
+                                <polygon points="12 2 2 7 12 12 22 7 12 2 Z"></polygon>
+                                <polyline points="2 17 12 22 22 17"></polyline>
+                                <polyline points="2 12 12 17 22 12"></polyline>
+                            </svg>
+                        </div>
+                        <div class="stat-number"><span class="counter" data-target="50">0</span>+</div>
+                        <div class="stat-title">Products Designed</div>
+                        <p class="stat-desc">Shipped SaaS apps, tools, and design system components.</p>
+                    </div>
+
+                    <!-- Stat Card 3 -->
+                    <div class="stat-card reveal-item">
+                        <div class="stat-icon">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#eab308"
+                                stroke-width="2">
+                                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                                <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                            </svg>
+                        </div>
+                        <div class="stat-number"><span class="counter" data-target="6">0</span>+</div>
+                        <div class="stat-title">Enterprise Clients</div>
+                        <p class="stat-desc">Collaborated with Nokia, Dentsu, ADIA, and global giants.</p>
+                    </div>
+
+                    <!-- Stat Card 4 -->
+                    <div class="stat-card reveal-item">
+                        <div class="stat-icon">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#22c55e"
+                                stroke-width="2">
+                                <path
+                                    d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z">
+                                </path>
+                                <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
+                                <line x1="12" y1="22.08" x2="12" y2="12"></line>
+                            </svg>
+                        </div>
+                        <div class="stat-number"><span class="counter" data-target="2">0</span> Yrs</div>
+                        <div class="stat-title">AI Product Design</div>
+                        <p class="stat-desc">Integrating generative workflows and prompt parameters.</p>
+                    </div>
+
+                    <!-- Stat Card 5 -->
+                    <div class="stat-card reveal-item">
+                        <div class="stat-icon">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#f43f5e"
+                                stroke-width="2">
+                                <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                                <line x1="9" y1="3" x2="9" y2="21"></line>
+                                <line x1="15" y1="3" x2="15" y2="21"></line>
+                                <line x1="3" y1="9" x2="21" y2="9"></line>
+                                <line x1="3" y1="15" x2="21" y2="15"></line>
+                            </svg>
+                        </div>
+                        <div class="stat-number"><span class="counter" data-target="8">0</span> Yrs</div>
+                        <div class="stat-title">B2B & SaaS Core</div>
+                        <p class="stat-desc">Simplifying complex data queries, rules, and workflows.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION: AI-POWERED DESIGN WORKFLOW -->
+        <section class="workflow-section" id="ai-workflow">
+            <div class="container">
+                <div class="section-label reveal-item">Modern Methodology</div>
+                <h2 class="section-title reveal-item">AI-Powered Product Design Workflow</h2>
+                <p class="section-desc reveal-item">
+                    I combine AI with strategic product thinking to reduce manual effort, eliminate repetitive tasks, and focus more time on solving complex user and business problems.
+                </p>
+                <!-- Horizontal Workflow Track -->
+                <div class="workflow-track-wrapper reveal-item" style="margin-top: 0.25rem; padding-top: 0.25rem;">
+                    <div class="workflow-track">
+                        <!-- Stage 1 -->
+                        <div class="workflow-card">
+                            <div class="workflow-card-glow"></div>
+                            <div class="workflow-stage-num">01</div>
+                            <div class="workflow-header-row">
+                                <div class="workflow-icon">
+                                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none"
+                                        stroke="var(--color-purple)" stroke-width="2">
+                                        <circle cx="11" cy="11" r="8"></circle>
+                                        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                                        <circle cx="11" cy="11" r="3" fill="var(--color-purple)" opacity="0.3"></circle>
+                                    </svg>
+                                </div>
+                                <h3>AI-Powered Discovery</h3>
+                            </div>
+                            <div style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 0.8rem; font-style: italic;">Tools: ChatGPT, Claude, Perplexity</div>
+                            <ul class="workflow-bullets">
+                                <li>Generate user personas</li>
+                                <li>Analyze business requirements</li>
+                                <li>Extract product opportunities</li>
+                                <li>Create JTBD and user stories</li>
+                            </ul>
+                            <div style="margin-top: auto; padding-top: 1rem; border-top: 1px dashed var(--border-color); font-size: 0.85rem; font-weight: 700; color: var(--color-purple);">Time Saved: 75%</div>
+                        </div>
+
+                        <!-- Connector 1 -->
+                        <div class="workflow-connector">
+                            <svg width="100%" height="8" viewBox="0 0 80 8" fill="none" preserveAspectRatio="none">
+                                <path d="M0 4H80" stroke="url(#connector-grad-1)" stroke-width="2"
+                                    stroke-dasharray="6 4" class="animated-flow" />
+                            </svg>
+                        </div>
+
+                        <!-- Stage 2 -->
+                        <div class="workflow-card">
+                            <div class="workflow-card-glow"></div>
+                            <div class="workflow-stage-num">02</div>
+                            <div class="workflow-header-row">
+                                <div class="workflow-icon">
+                                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none"
+                                        stroke="var(--color-blue)" stroke-width="2">
+                                        <path
+                                            d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z">
+                                        </path>
+                                        <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
+                                    </svg>
+                                </div>
+                                <h3>Research Acceleration</h3>
+                            </div>
+                            <div style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 0.8rem; font-style: italic;">Tools: Perplexity, ChatGPT</div>
+                            <ul class="workflow-bullets">
+                                <li>Competitor benchmarking</li>
+                                <li>UX pattern analysis</li>
+                                <li>Industry trend identification</li>
+                                <li>Feature comparison matrices</li>
+                            </ul>
+                            <div style="margin-top: auto; padding-top: 1rem; border-top: 1px dashed var(--border-color); font-size: 0.85rem; font-weight: 700; color: var(--color-blue);">Time Saved: 70%</div>
+                        </div>
+
+                        <!-- Connector 2 -->
+                        <div class="workflow-connector">
+                            <svg width="100%" height="8" viewBox="0 0 80 8" fill="none" preserveAspectRatio="none">
+                                <path d="M0 4H80" stroke="url(#connector-grad-2)" stroke-width="2"
+                                    stroke-dasharray="6 4" class="animated-flow" />
+                            </svg>
+                        </div>
+
+                        <!-- Stage 3 -->
+                        <div class="workflow-card">
+                            <div class="workflow-card-glow"></div>
+                            <div class="workflow-stage-num">03</div>
+                            <div class="workflow-header-row">
+                                <div class="workflow-icon">
+                                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#eab308"
+                                        stroke-width="2">
+                                        <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                                        <line x1="9" y1="3" x2="9" y2="21"></line>
+                                        <line x1="15" y1="3" x2="15" y2="21"></line>
+                                    </svg>
+                                </div>
+                                <h3>Information Architecture &amp; Flows</h3>
+                            </div>
+                            <div style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 0.8rem; font-style: italic;">Tools: ChatGPT, Claude, Whimsical AI</div>
+                            <ul class="workflow-bullets">
+                                <li>Generate user journeys</li>
+                                <li>Create task flows</li>
+                                <li>Validate edge cases</li>
+                                <li>Identify missing scenarios</li>
+                            </ul>
+                            <div style="margin-top: auto; padding-top: 1rem; border-top: 1px dashed var(--border-color); font-size: 0.85rem; font-weight: 700; color: #eab308;">Time Saved: 65%</div>
+                        </div>
+
+                        <!-- Connector 3 -->
+                        <div class="workflow-connector">
+                            <svg width="100%" height="8" viewBox="0 0 80 8" fill="none" preserveAspectRatio="none">
+                                <path d="M0 4H80" stroke="url(#connector-grad-3)" stroke-width="2"
+                                    stroke-dasharray="6 4" class="animated-flow" />
+                            </svg>
+                        </div>
+
+                        <!-- Stage 4 -->
+                        <div class="workflow-card">
+                            <div class="workflow-card-glow"></div>
+                            <div class="workflow-stage-num">04</div>
+                            <div class="workflow-header-row">
+                                <div class="workflow-icon">
+                                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#f43f5e"
+                                        stroke-width="2">
+                                        <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+                                        <path d="M18.5 2.5a2.121 2.121 0 1 1 3 3L12 15l-4 1 1-4z"></path>
+                                    </svg>
+                                </div>
+                                <h3>AI-Assisted Wireframing</h3>
+                            </div>
+                            <div style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 0.8rem; font-style: italic;">Tools: Figma AI, Lovable, Relume</div>
+                            <ul class="workflow-bullets">
+                                <li>Rapid layout generation</li>
+                                <li>Multiple concept exploration</li>
+                                <li>Screen structure validation</li>
+                                <li>Faster iteration cycles</li>
+                            </ul>
+                            <div style="margin-top: auto; padding-top: 1rem; border-top: 1px dashed var(--border-color); font-size: 0.85rem; font-weight: 700; color: #f43f5e;">Time Saved: 60%</div>
+                        </div>
+
+                        <!-- Connector 4 -->
+                        <div class="workflow-connector">
+                            <svg width="100%" height="8" viewBox="0 0 80 8" fill="none" preserveAspectRatio="none">
+                                <path d="M0 4H80" stroke="url(#connector-grad-4)" stroke-width="2"
+                                    stroke-dasharray="6 4" class="animated-flow" />
+                            </svg>
+                        </div>
+
+                        <!-- Stage 5 -->
+                        <div class="workflow-card">
+                            <div class="workflow-card-glow"></div>
+                            <div class="workflow-stage-num">05</div>
+                            <div class="workflow-header-row">
+                                <div class="workflow-icon">
+                                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#22c55e"
+                                        stroke-width="2">
+                                        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                                        <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                                    </svg>
+                                </div>
+                                <h3>Visual Design &amp; Design Systems</h3>
+                            </div>
+                            <div style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 0.8rem; font-style: italic;">Tools: Figma AI, Design System AI</div>
+                            <ul class="workflow-bullets">
+                                <li>Generate component variants</li>
+                                <li>Design consistency checks</li>
+                                <li>Auto-generate documentation</li>
+                                <li>Faster system scaling</li>
+                            </ul>
+                            <div style="margin-top: auto; padding-top: 1rem; border-top: 1px dashed var(--border-color); font-size: 0.85rem; font-weight: 700; color: #22c55e;">Time Saved: 55–60%</div>
+                        </div>
+
+                        <!-- Connector 5 -->
+                        <div class="workflow-connector">
+                            <svg width="100%" height="8" viewBox="0 0 80 8" fill="none" preserveAspectRatio="none">
+                                <path d="M0 4H80" stroke="url(#connector-grad-5)" stroke-width="2"
+                                    stroke-dasharray="6 4" class="animated-flow" />
+                            </svg>
+                        </div>
+
+                        <!-- Stage 6 -->
+                        <div class="workflow-card">
+                            <div class="workflow-card-glow"></div>
+                            <div class="workflow-stage-num">06</div>
+                            <div class="workflow-header-row">
+                                <div class="workflow-icon">
+                                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#00d2ff"
+                                        stroke-width="2">
+                                        <path d="M12 20h9"></path>
+                                        <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path>
+                                    </svg>
+                                </div>
+                                <h3>UX Writing &amp; Content Design</h3>
+                            </div>
+                            <div style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 0.8rem; font-style: italic;">Tools: ChatGPT, Claude</div>
+                            <ul class="workflow-bullets">
+                                <li>Microcopy creation</li>
+                                <li>Empty states</li>
+                                <li>Error messages</li>
+                                <li>Onboarding content</li>
+                            </ul>
+                            <div style="margin-top: auto; padding-top: 1rem; border-top: 1px dashed var(--border-color); font-size: 0.85rem; font-weight: 700; color: #00d2ff;">Time Saved: 75%</div>
+                        </div>
+
+                        <!-- Connector 6 -->
+                        <div class="workflow-connector">
+                            <svg width="100%" height="8" viewBox="0 0 80 8" fill="none" preserveAspectRatio="none">
+                                <path d="M0 4H80" stroke="url(#connector-grad-6)" stroke-width="2"
+                                    stroke-dasharray="6 4" class="animated-flow" />
+                            </svg>
+                        </div>
+
+                        <!-- Stage 7 -->
+                        <div class="workflow-card">
+                            <div class="workflow-card-glow"></div>
+                            <div class="workflow-stage-num">07</div>
+                            <div class="workflow-header-row">
+                                <div class="workflow-icon">
+                                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#a855f7"
+                                        stroke-width="2">
+                                        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                                    </svg>
+                                </div>
+                                <h3>Design Reviews &amp; Validation</h3>
+                            </div>
+                            <div style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 0.8rem; font-style: italic;">Tools: AI Heuristic Review Frameworks</div>
+                            <ul class="workflow-bullets">
+                                <li>Accessibility checks</li>
+                                <li>UX audits</li>
+                                <li>Edge-case identification</li>
+                                <li>Cognitive load assessment</li>
+                            </ul>
+                            <div style="margin-top: auto; padding-top: 1rem; border-top: 1px dashed var(--border-color); font-size: 0.85rem; font-weight: 700; color: #a855f7;">Time Saved: 65%</div>
+                        </div>
+
+                        <!-- Connector 7 -->
+                        <div class="workflow-connector">
+                            <svg width="100%" height="8" viewBox="0 0 80 8" fill="none" preserveAspectRatio="none">
+                                <path d="M0 4H80" stroke="url(#connector-grad-7)" stroke-width="2"
+                                    stroke-dasharray="6 4" class="animated-flow" />
+                            </svg>
+                        </div>
+
+                        <!-- Stage 8 -->
+                        <div class="workflow-card">
+                            <div class="workflow-card-glow"></div>
+                            <div class="workflow-stage-num">08</div>
+                            <div class="workflow-header-row">
+                                <div class="workflow-icon">
+                                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#06b6d4"
+                                        stroke-width="2">
+                                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                                        <polyline points="14 2 14 8 20 8"></polyline>
+                                        <line x1="16" y1="13" x2="8" y2="13"></line>
+                                        <line x1="16" y1="17" x2="8" y2="17"></line>
+                                        <polyline points="10 9 9 9 8 9"></polyline>
+                                    </svg>
+                                </div>
+                                <h3>Documentation &amp; Handoff</h3>
+                            </div>
+                            <div style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 0.8rem; font-style: italic;">Tools: ChatGPT, Notion AI</div>
+                            <ul class="workflow-bullets">
+                                <li>PRDs &amp; BRDs</li>
+                                <li>User Stories</li>
+                                <li>Acceptance Criteria</li>
+                                <li>Developer Handoff Notes</li>
+                            </ul>
+                            <div style="margin-top: auto; padding-top: 1rem; border-top: 1px dashed var(--border-color); font-size: 0.85rem; font-weight: 700; color: #06b6d4;">Time Saved: 75%</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Gradient definitions for connecting lines -->
+                <svg width="0" height="0" style="display: block;">
+                    <defs>
+                        <linearGradient id="connector-grad-1" x1="0%" y1="0%" x2="100%" y2="0%">
+                            <stop offset="0%" stop-color="var(--color-purple)" />
+                            <stop offset="100%" stop-color="var(--color-blue)" />
+                        </linearGradient>
+                        <linearGradient id="connector-grad-2" x1="0%" y1="0%" x2="100%" y2="0%">
+                            <stop offset="0%" stop-color="var(--color-blue)" />
+                            <stop offset="100%" stop-color="#eab308" />
+                        </linearGradient>
+                        <linearGradient id="connector-grad-3" x1="0%" y1="0%" x2="100%" y2="0%">
+                            <stop offset="0%" stop-color="#eab308" />
+                            <stop offset="100%" stop-color="#f43f5e" />
+                        </linearGradient>
+                        <linearGradient id="connector-grad-4" x1="0%" y1="0%" x2="100%" y2="0%">
+                            <stop offset="0%" stop-color="#f43f5e" />
+                            <stop offset="100%" stop-color="#22c55e" />
+                        </linearGradient>
+                        <linearGradient id="connector-grad-5" x1="0%" y1="0%" x2="100%" y2="0%">
+                            <stop offset="0%" stop-color="#22c55e" />
+                            <stop offset="100%" stop-color="#00d2ff" />
+                        </linearGradient>
+                        <linearGradient id="connector-grad-6" x1="0%" y1="0%" x2="100%" y2="0%">
+                            <stop offset="0%" stop-color="#00d2ff" />
+                            <stop offset="100%" stop-color="#a855f7" />
+                        </linearGradient>
+                        <linearGradient id="connector-grad-7" x1="0%" y1="0%" x2="100%" y2="0%">
+                            <stop offset="0%" stop-color="#a855f7" />
+                            <stop offset="100%" stop-color="#06b6d4" />
+                        </linearGradient>
+                    </defs>
+                </svg>
+
+                <!-- Workflow Metrics Sub-section: Impact -->
+                <div class="workflow-impact-panel reveal-item">
+                    <div class="impact-metrics-row">
+                        <!-- Before AI -->
+                        <div class="impact-metric-box traditional">
+                            <div class="impact-metric-header">
+                                <span class="dot-indicator"></span>
+                                <h4>Before AI</h4>
+                            </div>
+                            <div class="impact-metric-value">~120-140</div>
+                            <div class="impact-metric-label">Design Hours / Project</div>
+                            
+                            <!-- Visual comparison bar -->
+                            <div class="comparison-bar-container">
+                                <div class="comparison-bar traditional-bar" style="width: 100%;"></div>
+                            </div>
+                        </div>
+
+                        <!-- After AI -->
+                        <div class="impact-metric-box augmented">
+                            <span class="savings-badge">🚀 60% Faster</span>
+                            <div class="impact-metric-header">
+                                <span class="dot-indicator pulse"></span>
+                                <h4>After AI</h4>
+                            </div>
+                            <div class="impact-metric-value">~50-60</div>
+                            <div class="impact-metric-label">Design Hours / Project</div>
+                            
+                            <!-- Visual comparison bar -->
+                            <div class="comparison-bar-container">
+                                <div class="comparison-bar augmented-bar" style="width: 42%;"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Impact Key Results List -->
+                    <div class="impact-results-column">
+                        <div class="impact-results-header">
+                            <h4>Key Results &amp; Value Delivery</h4>
+                        </div>
+                        <ul class="impact-results-list">
+                            <li>
+                                <div class="result-icon-box purple">
+                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg>
+                                </div>
+                                <div class="result-content">
+                                    <h5>60% Faster Delivery</h5>
+                                    <p>Accelerating time-to-market without compromising visual or UX quality.</p>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="result-icon-box blue">
+                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path></svg>
+                                </div>
+                                <div class="result-content">
+                                    <h5>3x More Design Exploration</h5>
+                                    <p>Rapidly generating layout alternatives and pattern flows early in discovery.</p>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="result-icon-box yellow">
+                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="6"></circle><circle cx="12" cy="12" r="2"></circle></svg>
+                                </div>
+                                <div class="result-content">
+                                    <h5>Better Design Decisions</h5>
+                                    <p>Using AI validation frameworks to audit accessibility, heuristics, and user flows.</p>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="result-icon-box green">
+                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                                </div>
+                                <div class="result-content">
+                                    <h5>Improved Stakeholder Collaboration</h5>
+                                    <p>Aligning engineers, product managers, and clients through high-fidelity prototypes and clear specs.</p>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="result-icon-box cyan">
+                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+                                </div>
+                                <div class="result-content">
+                                    <h5>More Time for Strategy</h5>
+                                    <p>Offloading repetitive tasks to focus energy on solving core business and user problems.</p>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION: HOW I APPROACH COMPLEX PRODUCT PROBLEMS -->
+        <section class="approach-section" id="approach">
+            <div class="container">
+                <div class="section-label reveal-item">My Approach</div>
+                <h2 class="section-title reveal-item">How I Approach Complex Product Problems</h2>
+                <p class="section-desc reveal-item">
+                    Concept to Launch — A structured 5-step methodology to transform business ambiguity into
+                    high-adoption B2B SaaS products.
+                </p>
+
+                <!-- 5-Step Concept to Launch Timeline -->
+                <div class="concept-timeline reveal-item">
+                    <div class="timeline-bar"></div>
+
+                    <!-- Step 1 -->
+                    <div class="timeline-step-item">
+                        <div class="timeline-indicator">
+                            <span class="indicator-glow"></span>
+                            <span class="indicator-dot"></span>
+                            <span class="indicator-number">01</span>
+                        </div>
+                        <div class="timeline-card">
+                            <div class="timeline-card-glow"></div>
+                            <div class="timeline-header">
+                                <span class="step-badge">Phase 1</span>
+                                <h3>Discovery & Research</h3>
+                                <p class="step-subtitle">Understanding the Ecosystem</p>
+                            </div>
+                            <p class="step-desc">Deep-diving into B2B SaaS domains, user shadowing, and technical
+                                constraints analysis to align target expectations.</p>
+
+                            <div class="step-details-grid">
+                                <div class="step-col">
+                                    <h4>Activities</h4>
+                                    <ul>
+                                        <li>Stakeholder Interviews</li>
+                                        <li>User Shadowing</li>
+                                        <li>Competitor Auditing</li>
+                                    </ul>
+                                </div>
+                                <div class="step-col">
+                                    <h4>Key Deliverables</h4>
+                                    <div class="badge-row">
+                                        <span class="deliv-badge">User Personas</span>
+                                        <span class="deliv-badge">Constraints Map</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Step 2 -->
+                    <div class="timeline-step-item">
+                        <div class="timeline-indicator">
+                            <span class="indicator-glow"></span>
+                            <span class="indicator-dot"></span>
+                            <span class="indicator-number">02</span>
+                        </div>
+                        <div class="timeline-card">
+                            <div class="timeline-card-glow"></div>
+                            <div class="timeline-header">
+                                <span class="step-badge">Phase 2</span>
+                                <h3>Definition & Strategy</h3>
+                                <p class="step-subtitle">Scoping the Architecture</p>
+                            </div>
+                            <p class="step-desc">Synthesizing raw research data to define precise workflows, system
+                                bounds, and prioritized feature scopes.</p>
+
+                            <div class="step-details-grid">
+                                <div class="step-col">
+                                    <h4>Activities</h4>
+                                    <ul>
+                                        <li>Workflow & Journey Mapping</li>
+                                        <li>Feature Prioritization</li>
+                                        <li>IA Scoping</li>
+                                    </ul>
+                                </div>
+                                <div class="step-col">
+                                    <h4>Key Deliverables</h4>
+                                    <div class="badge-row">
+                                        <span class="deliv-badge">User Journeys</span>
+                                        <span class="deliv-badge">Scoping Specs</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Step 3 -->
+                    <div class="timeline-step-item">
+                        <div class="timeline-indicator">
+                            <span class="indicator-glow"></span>
+                            <span class="indicator-dot"></span>
+                            <span class="indicator-number">03</span>
+                        </div>
+                        <div class="timeline-card">
+                            <div class="timeline-card-glow"></div>
+                            <div class="timeline-header">
+                                <span class="step-badge">Phase 3</span>
+                                <h3>System Ideation & Layouts</h3>
+                                <p class="step-subtitle">Structural Explorations</p>
+                            </div>
+                            <p class="step-desc">Rapidly mapping information hierarchy, exploring screen variants, and
+                                building low-fidelity frameworks to ensure zero user friction.</p>
+
+                            <div class="step-details-grid">
+                                <div class="step-col">
+                                    <h4>Activities</h4>
+                                    <ul>
+                                        <li>Wireframe Generation</li>
+                                        <li>Layout Exploration</li>
+                                        <li>Usability Validation</li>
+                                    </ul>
+                                </div>
+                                <div class="step-col">
+                                    <h4>Key Deliverables</h4>
+                                    <div class="badge-row">
+                                        <span class="deliv-badge">Wireframes</span>
+                                        <span class="deliv-badge">IA Maps</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Step 4 -->
+                    <div class="timeline-step-item">
+                        <div class="timeline-indicator">
+                            <span class="indicator-glow"></span>
+                            <span class="indicator-dot"></span>
+                            <span class="indicator-number">04</span>
+                        </div>
+                        <div class="timeline-card">
+                            <div class="timeline-card-glow"></div>
+                            <div class="timeline-header">
+                                <span class="step-badge">Phase 4</span>
+                                <h3>Interface Design & Systems</h3>
+                                <p class="step-subtitle">High-Craft Systems Integration</p>
+                            </div>
+                            <p class="step-desc">Engineering visually premium interfaces anchored in strict modular
+                                token design systems to guarantee consistency.</p>
+
+                            <div class="step-details-grid">
+                                <div class="step-col">
+                                    <h4>Activities</h4>
+                                    <ul>
+                                        <li>Hi-fi UI Design</li>
+                                        <li>Component Building</li>
+                                        <li>Tokens Setup</li>
+                                    </ul>
+                                </div>
+                                <div class="step-col">
+                                    <h4>Key Deliverables</h4>
+                                    <div class="badge-row">
+                                        <span class="deliv-badge">Figma Source</span>
+                                        <span class="deliv-badge">Tokens Lib</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Step 5 -->
+                    <div class="timeline-step-item">
+                        <div class="timeline-indicator">
+                            <span class="indicator-glow"></span>
+                            <span class="indicator-dot"></span>
+                            <span class="indicator-number">05</span>
+                        </div>
+                        <div class="timeline-card">
+                            <div class="timeline-card-glow"></div>
+                            <div class="timeline-header">
+                                <span class="step-badge">Phase 5</span>
+                                <h3>Validation & Launch Handoff</h3>
+                                <p class="step-subtitle">Quality & Code Translation</p>
+                            </div>
+                            <p class="step-desc">Testing high-fidelity flows with target users, debugging states, and
+                                crafting precise specs for dev handoff.</p>
+
+                            <div class="step-details-grid">
+                                <div class="step-col">
+                                    <h4>Activities</h4>
+                                    <ul>
+                                        <li>Usability Testing Loops</li>
+                                        <li>Detail Spec Sheets</li>
+                                        <li>Sprint Audits</li>
+                                    </ul>
+                                </div>
+                                <div class="step-col">
+                                    <h4>Key Deliverables</h4>
+                                    <div class="badge-row">
+                                        <span class="deliv-badge">Test Reports</span>
+                                        <span class="deliv-badge">Handoff Specs</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 04: PROJECTS THAT SHAPED MY THINKING -->
+        <section class="projects-section" id="projects">
+            <div class="container">
+                <div class="section-label reveal-item">Selected Work</div>
+                <h2 class="section-title reveal-item">Projects That Changed How I Think About Design</h2>
+
+                <div class="projects-grid">
+                    <!-- Project 1 -->
+                    <a href="https://www.behance.net/gallery/137688209/UI-UX-Design-AI-Utilities-Platform"
+                        target="_blank" class="project-card reveal-item" rel="noopener noreferrer">
+                        <div class="project-image-placeholder">
+                            <div class="project-glow bg-p-1"></div>
+                            <img src="simplify_logo.png" alt="Simplify Logo" class="project-logo-preview">
+                        </div>
+                        <div class="project-info">
+                            <div class="project-text-details">
+                                <div class="project-meta">
+                                    <span>AI</span>
+                                    <span>Workflow Automation</span>
+                                    <span>Enterprise SaaS</span>
+                                </div>
+                                <h3>01 &mdash; Simplify</h3>
+                                <p class="project-caption">How AI transformed product documentation and delivery workflows.</p>
+                            </div>
+                            <span class="project-cta-link">
+                                View Case Study
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <line x1="7" y1="17" x2="17" y2="7"></line>
+                                    <polyline points="7 7 17 7 17 17"></polyline>
+                                </svg>
+                            </span>
+                        </div>
+                    </a>
+
+                    <!-- Project 2 -->
+                    <a href="https://www.behance.net/gallery/137688209/UI-UX-Design-K12-Learning-Platform"
+                        target="_blank" class="project-card reveal-item" rel="noopener noreferrer">
+                        <div class="project-image-placeholder">
+                            <div class="project-glow bg-p-2"></div>
+                            <img src="klass_logo.png" alt="Klass Logo" class="project-logo-preview">
+                        </div>
+                        <div class="project-info">
+                            <div class="project-text-details">
+                                <div class="project-meta">
+                                    <span>Dashboards</span>
+                                    <span>Education</span>
+                                    <span>Product Growth</span>
+                                </div>
+                                <h3>02 &mdash; Klass - K12 Learning Platform</h3>
+                                <p class="project-caption">Designing for thousands of students, tutors, and administrators.</p>
+                            </div>
+                            <span class="project-cta-link">
+                                View Case Study
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <line x1="7" y1="17" x2="17" y2="7"></line>
+                                    <polyline points="7 7 17 7 17 17"></polyline>
+                                </svg>
+                            </span>
+                        </div>
+                    </a>
+
+                    <!-- Project 3 -->
+                    <a href="https://www.behance.net/gallery/137688209/UI-UX-Design-Nokia-Enterprise-Dashboard"
+                        target="_blank" class="project-card reveal-item" rel="noopener noreferrer">
+                        <div class="project-image-placeholder">
+                            <div class="project-glow bg-p-3"></div>
+                            <img src="nuenet_logo.png" alt="Nue Net. Logo" class="project-logo-preview">
+                        </div>
+                        <div class="project-info">
+                            <div class="project-text-details">
+                                <div class="project-meta">
+                                    <span>Enterprise UX</span>
+                                    <span>Information Architecture</span>
+                                    <span>Systems Thinking</span>
+                                </div>
+                                <h3>03 &mdash; Nue Net.</h3>
+                                <p class="project-caption">Making complex networking systems easier to manage.</p>
+                            </div>
+                            <span class="project-cta-link">
+                                View Case Study
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <line x1="7" y1="17" x2="17" y2="7"></line>
+                                    <polyline points="7 7 17 7 17 17"></polyline>
+                                </svg>
+                            </span>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION: BEYOND DESIGNING SCREENS -->
+        <section class="beyond-section" id="leadership">
+            <div class="container">
+                <div class="section-label reveal-item">Leadership & Strategy</div>
+                <h2 class="section-title reveal-item">Beyond Designing Screens</h2>
+
+                <div class="beyond-grid reveal-item">
+                    <!-- Item 1 -->
+                    <div class="beyond-item">
+                        <span class="beyond-icon">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <polygon points="12 8 8 12 12 16 16 12"></polygon>
+                            </svg>
+                        </span>
+                        <h3>Product Strategy</h3>
+                        <p>Identifying emerging product opportunities, running competitive audits, and defining
+                            strategic roadmaps based on success metrics.</p>
+                    </div>
+                    <!-- Item 2 -->
+                    <div class="beyond-item">
+                        <span class="beyond-icon">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                                <circle cx="9" cy="7" r="4"></circle>
+                                <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                            </svg>
+                        </span>
+                        <h3>Stakeholder Collaboration</h3>
+                        <p>Aligning executives, PMs, and developers on unified UX goals through structured framing
+                            sessions and product reviews.</p>
+                    </div>
+                    <!-- Item 3 -->
+                    <div class="beyond-item">
+                        <span class="beyond-icon">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
+                            </svg>
+                        </span>
+                        <h3>Design Leadership</h3>
+                        <p>Drove UX vision across complex platforms, balancing technical systems with intuitive layout
+                            flows.</p>
+                    </div>
+                    <!-- Item 4 -->
+                    <div class="beyond-item">
+                        <span class="beyond-icon">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                                <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                            </svg>
+                        </span>
+                        <h3>Pre-sales & Solutioning</h3>
+                        <p>Translating RFPs into interactive prototypes and product stories that illustrate core value
+                            to prospects.</p>
+                    </div>
+                    <!-- Item 5 -->
+                    <div class="beyond-item">
+                        <span class="beyond-icon">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                                <circle cx="9" cy="7" r="4"></circle>
+                                <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                            </svg>
+                        </span>
+                        <h3>Team Mentoring</h3>
+                        <p>Mentored 5+ designers, refining visual craftsmanship and building career growth paths.</p>
+                    </div>
+                    <!-- Item 6 -->
+                    <div class="beyond-item">
+                        <span class="beyond-icon">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <rect x="3" y="3" width="7" height="9"></rect>
+                                <rect x="14" y="3" width="7" height="5"></rect>
+                                <rect x="14" y="12" width="7" height="9"></rect>
+                                <rect x="3" y="16" width="7" height="5"></rect>
+                            </svg>
+                        </span>
+                        <h3>Design Systems</h3>
+                        <p>Structuring tokens and component libraries to bridge design tools with development, saving
+                            hundreds of engineering hours.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 07: THE IMPACT -->
+        <section class="impact-section" id="impact">
+            <div class="container">
+                <div class="section-label reveal-item">The Impact</div>
+                <h2 class="section-title reveal-item">Delivering Tangible Business Value</h2>
+
+                <div class="impact-grid">
+                    <div class="impact-card reveal-item">
+                        <div class="impact-num"><span class="counter" data-target="9">0</span>+</div>
+                        <div class="impact-label">Years Experience</div>
+                    </div>
+                    <div class="impact-card reveal-item">
+                        <div class="impact-num"><span class="counter" data-target="20">0</span>%</div>
+                        <div class="impact-label">Business Growth Contribution</div>
+                    </div>
+                    <div class="impact-card reveal-item">
+                        <div class="impact-num"><span class="counter" data-target="50">0</span>+</div>
+                        <div class="impact-label">Products & Features Delivered</div>
+                    </div>
+                    <div class="impact-card reveal-item">
+                        <div class="impact-num">Global</div>
+                        <div class="impact-label">Enterprise Clients</div>
+                    </div>
+                    <div class="impact-card reveal-item">
+                        <div class="impact-num">4&ndash;<span class="counter" data-target="5">0</span></div>
+                        <div class="impact-label">Designers Mentored</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 08: CLIENTS & TESTIMONIALS -->
+        <section class="testimonials-section" id="testimonials">
+            <div class="container">
+                <div class="section-label reveal-item">Trusted By</div>
+                <h2 class="section-title reveal-item">Client Collaborations &amp; Testimonials</h2>
+                <p class="section-desc reveal-item">
+                    Partnering with global enterprise brands and growth-stage companies to deliver measurable product design outcomes.
+                </p>
+
+                <!-- Client Logos Grid -->
+                <div class="client-grid reveal-item">
+                    <div class="client-logo-card">
+                        <img src="logo_nokia.png" alt="Nokia" class="client-logo-img">
+                    </div>
+                    <div class="client-logo-card">
+                        <img src="logo_dentsu.png" alt="Dentsu" class="client-logo-img">
+                    </div>
+                    <div class="client-logo-card">
+                        <img src="logo_wpo.png" alt="Workplace Options" class="client-logo-img">
+                    </div>
+                    <div class="client-logo-card">
+                        <img src="logo_bajaj.png" alt="Bajaj Finserv" class="client-logo-img">
+                    </div>
+                    <div class="client-logo-card">
+                        <img src="logo_k12.png" alt="K12" class="client-logo-img">
+                    </div>
+                    <div class="client-logo-card">
+                        <img src="logo_compaq.png" alt="Compaq" class="client-logo-img">
+                    </div>
+                </div>
+
+                <!-- Testimonials Slider -->
+                <div class="testimonials-track-wrapper reveal-item">
+                    <div class="testimonials-track">
+                        <!-- Testimonial 1 -->
+                        <div class="testimonial-card">
+                            <div class="testimonial-quote-icon">&ldquo;</div>
+                            <p class="testimonial-quote">
+                                Saransh brought clarity to a highly fragmented enterprise workflow. His systems-thinking approach restructured our core navigation, driving a significant boost in user task completion rate.
+                            </p>
+                            <div class="testimonial-author">
+                                <div class="author-name">Director of Product</div>
+                                <div class="author-company">Nokia</div>
+                            </div>
+                        </div>
+
+                        <!-- Testimonial 2 -->
+                        <div class="testimonial-card">
+                            <div class="testimonial-quote-icon">&ldquo;</div>
+                            <p class="testimonial-quote">
+                                Collaborating with Saransh was a developer's dream. He doesn't just design beautiful screens; he understands component logic and developer handoff, which reduced our front-end refinement time by 40%.
+                            </p>
+                            <div class="testimonial-author">
+                                <div class="author-name">VP of Engineering</div>
+                                <div class="author-company">Workplace Options</div>
+                            </div>
+                        </div>
+
+                        <!-- Testimonial 3 -->
+                        <div class="testimonial-card">
+                            <div class="testimonial-quote-icon">&ldquo;</div>
+                            <p class="testimonial-quote">
+                                Saransh’s customer-focused approach and rapid prototyping allowed us to validate concepts in days instead of weeks. He possesses a rare combination of UI craftsmanship and product strategy.
+                            </p>
+                            <div class="testimonial-author">
+                                <div class="author-name">VP of Marketing</div>
+                                <div class="author-company">Bajaj Finserv</div>
+                            </div>
+                        </div>
+
+                        <!-- Testimonial 4 -->
+                        <div class="testimonial-card">
+                            <div class="testimonial-quote-icon">&ldquo;</div>
+                            <p class="testimonial-quote">
+                                Saransh possesses an incredible ability to balance business goals with intuitive user experiences. His work on our SaaS networking tools turned complex analytics into clean, actionable dashboards.
+                            </p>
+                            <div class="testimonial-author">
+                                <div class="author-name">Head of Product</div>
+                                <div class="author-company">Dentsu</div>
+                            </div>
+                        </div>
+
+                        <!-- Testimonial 5 -->
+                        <div class="testimonial-card">
+                            <div class="testimonial-quote-icon">&ldquo;</div>
+                            <p class="testimonial-quote">
+                                Saransh's design leadership and mentorship helped raise our entire team's standard. He brought structured design systems thinking that unified products across multiple business units.
+                            </p>
+                            <div class="testimonial-author">
+                                <div class="author-name">CDO</div>
+                                <div class="author-company">K12 Education</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 09: LET'S BUILD SOMETHING GREAT -->
+        <section class="contact-section" id="contact">
+            <div class="container">
+                <div class="section-label reveal-item">The End Chapter</div>
+                <h2 class="section-title reveal-item">The next chapter starts here.</h2>
+                <p class="section-desc reveal-item">
+                    I'm currently exploring Lead Product Designer and Senior Product Designer opportunities across
+                    Product Companies, AI Startups, Enterprise SaaS Organizations, Delhi NCR, and Remote teams.
+                </p>
+                <div class="immediate-joiner-badge reveal-item">
+                    <span class="status-pulse"></span>
+                    Immediate Joiner
+                </div>
+
+                <div class="contact-actions reveal-item">
+                    <a href="https://www.linkedin.com/in/saransh-verma/" target="_blank" class="btn btn-secondary"
+                        rel="noopener noreferrer">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z">
+                            </path>
+                            <rect x="2" y="9" width="4" height="12"></rect>
+                            <circle cx="4" cy="4" r="2"></circle>
+                        </svg>
+                        LinkedIn
+                    </a>
+
+                    <a href="https://www.behance.net/saransh-verma" target="_blank" class="btn btn-secondary"
+                        rel="noopener noreferrer">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path
+                                d="M12 12H18M12 9H16.5M9.5 9A2.5 2.5 0 0 0 7 6.5H3v11h4a2.5 2.5 0 0 0 2.5-2.5 2 2 0 0 0-1.5-2 2 2 0 0 0 1.5-2.5Z" />
+                        </svg>
+                        Behance
+                    </a>
+
+                    <a href="https://dribbble.com/saranshverma" target="_blank" class="btn btn-secondary"
+                        rel="noopener noreferrer">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <path
+                                d="M8.56 2.75c4.37 6.03 6.02 9.42 8.03 17.72m2.54-15.38c-3.72 4.35-8.94 5.66-16.88 5.85m19.5 1.9c-3.5-.49-11.05 1-11.6 8.56" />
+                        </svg>
+                        Dribbble
+                    </a>
+
+                    <a href="https://wa.me/919990288535" target="_blank" class="btn btn-secondary"
+                        rel="noopener noreferrer">
+                        <!-- WhatsApp SVG Outline Icon -->
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path
+                                d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z" />
+                        </svg>
+                        WhatsApp
+                    </a>
+
+                    <a href="mailto:vermasaransh01@gmail.com" class="btn btn-secondary">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z">
+                            </path>
+                            <polyline points="22,6 12,13 2,6"></polyline>
+                        </svg>
+                        Email
+                    </a>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="main-footer">
+        <div class="container footer-content">
+            <p>&copy; 2026 Saransh Verma. Built for product impact.</p>
+        </div>
+    </footer>
+
+    <!-- Interactive Resume Modal (Fallback viewer if requested) -->
+    <div class="modal" id="resumeModal">
+        <div class="modal-overlay"></div>
+        <div class="modal-wrapper">
+            <div class="modal-header">
+                <h2>Saransh — Professional Experience</h2>
+                <button class="modal-close" id="closeModal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="resume-sheet">
+                    <h3>Lead Product Designer</h3>
+                    <p class="resume-sub">9+ Years of UX, SaaS, AI, and Product Strategy</p>
+                    <hr>
+                    <div class="resume-section">
+                        <h4>Professional Profile</h4>
+                        <p>Collaborative Lead Designer with a history of simplifying complex systems, aligning
+                            stakeholders, and setting system standards to drive high adoption and business growth.</p>
+                    </div>
+                    <div class="resume-section">
+                        <h4>Key Achievements</h4>
+                        <ul>
+                            <li><strong>20% Business Growth Contribution</strong> by restructuring key layouts and
+                                onboarding mechanisms.</li>
+                            <li><strong>50+ Products & Features Delivered</strong> across education, networking, SaaS,
+                                and AI utility fields.</li>
+                            <li><strong>Design Systems Core</strong>: Architected standard reusable component libraries
+                                saving hundreds of hours of design-to-code translations.</li>
+                        </ul>
+                    </div>
+                    <div class="resume-section">
+                        <h4>Contact Details</h4>
+                        <p>LinkedIn: linkedin.com/in/saransh-verma | Email: vermasaransh01@gmail.com</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Floating Resume CTA -->
+    <a href="resume.pdf" download="Saransh_Verma_Resume.pdf" class="floating-cv-cta" id="floatingCvCta"
+        aria-label="Download CV">
+        <span class="cta-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                <polyline points="7 10 12 15 17 10"></polyline>
+                <line x1="12" y1="15" x2="12" y2="3"></line>
+            </svg>
+        </span>
+        <span class="cta-text">Download CV</span>
+    </a>
+
+    <!-- Script file -->
+    <script src="app.js"></script>
+</body>
+
+</html>

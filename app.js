@@ -1,0 +1,386 @@
+document.addEventListener('DOMContentLoaded', () => {
+
+    // ==========================================================================
+    // THEME TOGGLE
+    // ==========================================================================
+    const themeToggleBtn = document.getElementById('themeToggle');
+    const mobileThemeToggleBtn = document.getElementById('mobileThemeToggle');
+    
+    // Check saved theme or default to dark
+    const savedTheme = localStorage.getItem('theme') || 'dark';
+    document.documentElement.setAttribute('data-theme', savedTheme);
+    
+    const toggleTheme = () => {
+        const currentTheme = document.documentElement.getAttribute('data-theme') || 'dark';
+        const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+        document.documentElement.setAttribute('data-theme', newTheme);
+        localStorage.setItem('theme', newTheme);
+    };
+
+    if (themeToggleBtn) {
+        themeToggleBtn.addEventListener('click', toggleTheme);
+    }
+    if (mobileThemeToggleBtn) {
+        mobileThemeToggleBtn.addEventListener('click', toggleTheme);
+    }
+
+    // ==========================================================================
+    // MOBILE NAVIGATION TOGGLE
+    // ==========================================================================
+    const menuToggle = document.querySelector('.mobile-menu-toggle');
+    const navOverlay = document.querySelector('.mobile-nav-overlay');
+    const mobileLinks = document.querySelectorAll('.mobile-nav-link');
+
+    if (menuToggle && navOverlay) {
+        menuToggle.addEventListener('click', () => {
+            menuToggle.classList.toggle('active');
+            navOverlay.classList.toggle('active');
+            document.body.classList.toggle('no-scroll');
+        });
+
+        mobileLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                menuToggle.classList.remove('active');
+                navOverlay.classList.remove('active');
+                document.body.classList.remove('no-scroll');
+            });
+        });
+    }
+
+    // ==========================================================================
+    // CURSOR FOLLOW GLOW & SCROLL PROGRESS
+    // ==========================================================================
+    const cursorGlow = document.getElementById('cursorGlow');
+    const customCursor = document.getElementById('customCursor');
+    const scrollProgress = document.getElementById('scrollProgress');
+
+    // Store mouse coordinates
+    let mouseX = 0;
+    let mouseY = 0;
+    
+    // Store current position of custom elements
+    let glowX = 0;
+    let glowY = 0;
+    let cursorX = 0;
+    let cursorY = 0;
+
+    document.addEventListener('mousemove', (e) => {
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+    });
+
+    // Smooth lerp (linear interpolation) animation loop for cursor tracking
+    function animateCursor() {
+        // Different speeds for glow vs dot for a beautiful delayed parallax follow effect
+        glowX += (mouseX - glowX) * 0.08;
+        glowY += (mouseY - glowY) * 0.08;
+        
+        cursorX += (mouseX - cursorX) * 0.2;
+        cursorY += (mouseY - cursorY) * 0.2;
+
+        if (cursorGlow) {
+            cursorGlow.style.left = `${glowX}px`;
+            cursorGlow.style.top = `${glowY}px`;
+        }
+
+        if (customCursor) {
+            customCursor.style.left = `${cursorX}px`;
+            customCursor.style.top = `${cursorY}px`;
+        }
+
+        requestAnimationFrame(animateCursor);
+    }
+    requestAnimationFrame(animateCursor);
+
+    const updateScrollProgress = () => {
+        const scrollTop = window.scrollY;
+        const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+        const percentage = (scrollTop / docHeight) * 100;
+        if (scrollProgress) {
+            scrollProgress.style.width = `${percentage}%`;
+        }
+    };
+    window.addEventListener('scroll', updateScrollProgress);
+    updateScrollProgress();
+
+    // ==========================================================================
+    // INTERACTIVE PROFILE CARD 3D TILT
+    // ==========================================================================
+    const profileCard = document.getElementById('profileCard');
+    if (profileCard) {
+        profileCard.addEventListener('mouseenter', () => {
+            if (customCursor) {
+                customCursor.classList.add('cursor-active-profile');
+            }
+        });
+
+        profileCard.addEventListener('mousemove', (e) => {
+            const rect = profileCard.getBoundingClientRect();
+            const cardX = e.clientX - rect.left;
+            const cardY = e.clientY - rect.top;
+            
+            const percentX = (cardX / rect.width) * 100;
+            const percentY = (cardY / rect.height) * 100;
+            profileCard.style.setProperty('--tilt-x', `${percentX}%`);
+            profileCard.style.setProperty('--tilt-y', `${percentY}%`);
+            
+            const rotX = ((cardY / rect.height) * 20 - 10).toFixed(1);
+            const rotY = ((10 - (cardX / rect.width) * 20)).toFixed(1);
+            
+            profileCard.style.transform = `rotateX(${rotX}deg) rotateY(${rotY}deg) scale3d(1.02, 1.02, 1.02)`;
+        });
+        
+        profileCard.addEventListener('mouseleave', () => {
+            profileCard.style.transform = `rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)`;
+            profileCard.style.setProperty('--tilt-x', '50%');
+            profileCard.style.setProperty('--tilt-y', '50%');
+            if (customCursor) {
+                customCursor.classList.remove('cursor-active-profile');
+            }
+        });
+    }
+
+    // ==========================================================================
+    // REVEAL ANIMATIONS (INTERSECTION OBSERVER)
+    // ==========================================================================
+    const revealElements = document.querySelectorAll('.reveal-item');
+    
+    const revealObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('active');
+            }
+        });
+    }, {
+        threshold: 0.15,
+        rootMargin: '0px 0px -50px 0px'
+    });
+
+    revealElements.forEach(element => {
+        revealObserver.observe(element);
+    });
+
+    // ==========================================================================
+    // SPOTLIGHT GLOW EFFECT (CARD MOUSE HOVER)
+    // ==========================================================================
+    const problemCards = document.querySelectorAll('.problem-card');
+    
+    problemCards.forEach(card => {
+        card.addEventListener('mousemove', (e) => {
+            const rect = card.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            
+            card.style.setProperty('--mouse-x', `${x}px`);
+            card.style.setProperty('--mouse-y', `${y}px`);
+        });
+    });
+
+    // Project cards parallax glow shift
+    const projectCards = document.querySelectorAll('.project-card');
+    projectCards.forEach(card => {
+        card.addEventListener('mousemove', (e) => {
+            const rect = card.getBoundingClientRect();
+            const x = ((e.clientX - rect.left) / rect.width) * 30 - 15; // Shift between -15px to 15px
+            const y = ((e.clientY - rect.top) / rect.height) * 30 - 15;
+            
+            card.style.setProperty('--p-hover-x', `${x}px`);
+            card.style.setProperty('--p-hover-y', `${y}px`);
+        });
+        
+        card.addEventListener('mouseleave', () => {
+            card.style.setProperty('--p-hover-x', '0px');
+            card.style.setProperty('--p-hover-y', '0px');
+        });
+    });
+
+    // Native download of resume.pdf is handled directly by the anchor tag in index.html.
+
+    // ==========================================================================
+    // IMPACT NUMBERS COUNT UP ON SCROLL
+    // ==========================================================================
+    const counters = document.querySelectorAll('.counter');
+    
+    const countUp = (counter) => {
+        const rawTarget = counter.getAttribute('data-target');
+        const isFloat = rawTarget.includes('.');
+        const target = parseFloat(rawTarget);
+        const current = parseFloat(counter.innerText || '0');
+        
+        // Calculate step increments
+        const step = isFloat ? 0.1 : Math.ceil(target / 40);
+        
+        if (current < target) {
+            const nextValue = Math.min(current + step, target);
+            counter.innerText = isFloat ? nextValue.toFixed(1) : Math.floor(nextValue);
+            setTimeout(() => countUp(counter), 30);
+        } else {
+            counter.innerText = isFloat ? target.toFixed(1) : target;
+        }
+    };
+
+    const counterObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const counter = entry.target;
+                countUp(counter);
+                counterObserver.unobserve(counter);
+            }
+        });
+    }, {
+        threshold: 0.5
+    });
+
+    counters.forEach(counter => {
+        counterObserver.observe(counter);
+    });
+
+    // Workflow Cards Mouse Spotlight Effect
+    const workflowCards = document.querySelectorAll('.workflow-card');
+    workflowCards.forEach(card => {
+        card.addEventListener('mousemove', (e) => {
+            const rect = card.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            card.style.setProperty('--mouse-x', `${x}px`);
+            card.style.setProperty('--mouse-y', `${y}px`);
+        });
+    });
+
+    // Approach Cards Mouse Spotlight Effect
+    const approachCards = document.querySelectorAll('.timeline-card');
+    approachCards.forEach(card => {
+        card.addEventListener('mousemove', (e) => {
+            const rect = card.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            card.style.setProperty('--mouse-x', `${x}px`);
+            card.style.setProperty('--mouse-y', `${y}px`);
+        });
+    });
+
+    // Scroll Progress Indicator
+    const progressBar = document.createElement('div');
+    progressBar.className = 'scroll-progress-bar';
+    document.body.appendChild(progressBar);
+
+    window.addEventListener('scroll', () => {
+        const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
+        if (totalHeight > 0) {
+            const progress = (window.scrollY / totalHeight) * 100;
+            progressBar.style.width = `${progress}%`;
+        }
+    });
+
+    // Workflow Track Auto Slider & Drag-to-Scroll
+    const trackWrapper = document.querySelector('.workflow-track-wrapper');
+    if (trackWrapper) {
+        let isDown = false;
+        let startX;
+        let scrollLeftVal;
+        let isHovered = false;
+        let scrollTimer = null;
+
+        // Hover tracking to pause auto-scroll
+        trackWrapper.addEventListener('mouseenter', () => { isHovered = true; });
+        trackWrapper.addEventListener('mouseleave', () => { isHovered = false; });
+
+        // Mouse Drag to Scroll
+        trackWrapper.addEventListener('mousedown', (e) => {
+            isDown = true;
+            trackWrapper.classList.add('active-grab');
+            startX = e.pageX - trackWrapper.offsetLeft;
+            scrollLeftVal = trackWrapper.scrollLeft;
+        });
+
+        trackWrapper.addEventListener('mouseleave', () => {
+            isDown = false;
+            trackWrapper.classList.remove('active-grab');
+        });
+
+        trackWrapper.addEventListener('mouseup', () => {
+            isDown = false;
+            trackWrapper.classList.remove('active-grab');
+        });
+
+        trackWrapper.addEventListener('mousemove', (e) => {
+            if (!isDown) return;
+            e.preventDefault();
+            const x = e.pageX - trackWrapper.offsetLeft;
+            const walk = (x - startX) * 1.5; // Scroll speed multiplier
+            trackWrapper.scrollLeft = scrollLeftVal - walk;
+        });
+
+        // Auto Slider Animation Loop
+        const startAutoScroll = () => {
+            scrollTimer = setInterval(() => {
+                if (isHovered || isDown) return;
+                const maxScrollLeft = trackWrapper.scrollWidth - trackWrapper.clientWidth;
+                if (trackWrapper.scrollLeft >= maxScrollLeft - 10) {
+                    trackWrapper.scrollTo({ left: 0, behavior: 'smooth' });
+                } else {
+                    trackWrapper.scrollBy({ left: 360, behavior: 'smooth' });
+                }
+            }, 4000);
+        };
+
+        startAutoScroll();
+    }
+
+    // Testimonials Track Auto Slider & Drag-to-Scroll
+    const testimonialsWrapper = document.querySelector('.testimonials-track-wrapper');
+    if (testimonialsWrapper) {
+        let isDown = false;
+        let startX;
+        let scrollLeftVal;
+        let isHovered = false;
+        let scrollTimer = null;
+
+        // Hover tracking to pause auto-scroll
+        testimonialsWrapper.addEventListener('mouseenter', () => { isHovered = true; });
+        testimonialsWrapper.addEventListener('mouseleave', () => { isHovered = false; });
+
+        // Mouse Drag to Scroll
+        testimonialsWrapper.addEventListener('mousedown', (e) => {
+            isDown = true;
+            testimonialsWrapper.classList.add('active-grab');
+            startX = e.pageX - testimonialsWrapper.offsetLeft;
+            scrollLeftVal = testimonialsWrapper.scrollLeft;
+        });
+
+        testimonialsWrapper.addEventListener('mouseleave', () => {
+            isDown = false;
+            testimonialsWrapper.classList.remove('active-grab');
+        });
+
+        testimonialsWrapper.addEventListener('mouseup', () => {
+            isDown = false;
+            testimonialsWrapper.classList.remove('active-grab');
+        });
+
+        testimonialsWrapper.addEventListener('mousemove', (e) => {
+            if (!isDown) return;
+            e.preventDefault();
+            const x = e.pageX - testimonialsWrapper.offsetLeft;
+            const walk = (x - startX) * 1.5; // Scroll speed multiplier
+            testimonialsWrapper.scrollLeft = scrollLeftVal - walk;
+        });
+
+        // Auto Slider Animation Loop
+        const startAutoScrollTestimonials = () => {
+            scrollTimer = setInterval(() => {
+                if (isHovered || isDown) return;
+                const maxScrollLeft = testimonialsWrapper.scrollWidth - testimonialsWrapper.clientWidth;
+                if (testimonialsWrapper.scrollLeft >= maxScrollLeft - 10) {
+                    testimonialsWrapper.scrollTo({ left: 0, behavior: 'smooth' });
+                } else {
+                    const card = testimonialsWrapper.querySelector('.testimonial-card');
+                    const step = card ? card.offsetWidth + 32 : 482; // card width + gap
+                    testimonialsWrapper.scrollBy({ left: step, behavior: 'smooth' });
+                }
+            }, 5000);
+        };
+
+        startAutoScrollTestimonials();
+    }
+});
