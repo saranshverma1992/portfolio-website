@@ -205,13 +205,16 @@ document.addEventListener('DOMContentLoaded', () => {
             const x = e.clientX - rect.left;
             const y = e.clientY - rect.top;
             
+            // Set transitions to none during active tracking to eliminate lag and stutter
+            card.style.transition = 'none';
+            
             // Mouse spotlight coordinates
             card.style.setProperty('--mouse-x', `${x}px`);
             card.style.setProperty('--mouse-y', `${y}px`);
             
-            // 3D Tilt calculation (subtle 4 degree rotation max)
-            const rotX = ((y / rect.height) * 8 - 4).toFixed(1);
-            const rotY = ((4 - (x / rect.width) * 8)).toFixed(1);
+            // 3D Tilt calculation (12 degree rotation max for visible effect)
+            const rotX = ((y / rect.height) * 12 - 6).toFixed(1);
+            const rotY = ((6 - (x / rect.width) * 12)).toFixed(1);
             
             card.style.transform = `perspective(1000px) rotateX(${rotX}deg) rotateY(${rotY}deg) translateY(-6px)`;
             
@@ -223,6 +226,8 @@ document.addEventListener('DOMContentLoaded', () => {
         });
         
         card.addEventListener('mouseleave', () => {
+            // Restore smooth transitions on return to center
+            card.style.transition = 'transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.4s ease, background 0.4s ease, box-shadow 0.4s ease';
             card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) translateY(0)';
             card.style.setProperty('--p-hover-x', '0px');
             card.style.setProperty('--p-hover-y', '0px');

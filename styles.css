@@ -1994,6 +1994,7 @@ p {
     transition: border-color 0.4s ease, background 0.4s ease, box-shadow 0.4s ease, transform 0.15s ease-out;
     position: relative;
     overflow: hidden;
+    transform-style: preserve-3d;
 }
 
 /* Bento Grid Card Spanning */
