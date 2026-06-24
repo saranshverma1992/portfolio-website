@@ -510,4 +510,94 @@ document.addEventListener('DOMContentLoaded', () => {
             particles.forEach(p => p.reset());
         });
     }
+
+    // ==========================================================================
+    // FULL SCREEN DRAWING CANVAS INTERACTION
+    // ==========================================================================
+    const drawCanvas = document.getElementById('drawingCanvas');
+    if (drawCanvas) {
+        const dCtx = drawCanvas.getContext('2d');
+        
+        const resizeDrawCanvas = () => {
+            drawCanvas.width = window.innerWidth;
+            drawCanvas.height = window.innerHeight;
+        };
+        window.addEventListener('resize', resizeDrawCanvas);
+        resizeDrawCanvas();
+        
+        let isDrawing = false;
+        let lastDrawX = 0;
+        let lastDrawY = 0;
+        let canvasOpacity = 1;
+        let fadeInterval = null;
+        
+        window.addEventListener('mousedown', (e) => {
+            if (e.button !== 0) return; // Left click only
+            
+            // Clear previous content immediately
+            dCtx.clearRect(0, 0, drawCanvas.width, drawCanvas.height);
+            drawCanvas.style.opacity = '1';
+            
+            isDrawing = true;
+            lastDrawX = e.clientX;
+            lastDrawY = e.clientY;
+            
+            if (customCursor) {
+                customCursor.classList.add('drawing');
+            }
+            
+            if (fadeInterval) {
+                clearInterval(fadeInterval);
+                fadeInterval = null;
+            }
+            canvasOpacity = 1;
+        });
+        
+        window.addEventListener('mousemove', (e) => {
+            if (!isDrawing) return;
+            
+            dCtx.beginPath();
+            dCtx.moveTo(lastDrawX, lastDrawY);
+            dCtx.lineTo(e.clientX, e.clientY);
+            
+            // Glowing neon stroke
+            const currentTheme = document.documentElement.getAttribute('data-theme') || 'dark';
+            dCtx.strokeStyle = currentTheme === 'light' ? '#3b82f6' : '#a855f7';
+            dCtx.lineWidth = 4;
+            dCtx.lineCap = 'round';
+            dCtx.lineJoin = 'round';
+            dCtx.shadowColor = currentTheme === 'light' ? 'rgba(59, 130, 246, 0.6)' : 'rgba(168, 85, 247, 0.8)';
+            dCtx.shadowBlur = 8;
+            
+            dCtx.stroke();
+            
+            lastDrawX = e.clientX;
+            lastDrawY = e.clientY;
+        });
+        
+        const stopDrawing = () => {
+            if (!isDrawing) return;
+            isDrawing = false;
+            
+            if (customCursor) {
+                customCursor.classList.remove('drawing');
+            }
+            
+            // Smoothly fade out canvas opacity
+            if (fadeInterval) clearInterval(fadeInterval);
+            fadeInterval = setInterval(() => {
+                canvasOpacity -= 0.04;
+                if (canvasOpacity <= 0) {
+                    clearInterval(fadeInterval);
+                    fadeInterval = null;
+                    dCtx.clearRect(0, 0, drawCanvas.width, drawCanvas.height);
+                } else {
+                    drawCanvas.style.opacity = canvasOpacity;
+                }
+            }, 30); // ~33fps transition
+        };
+        
+        window.addEventListener('mouseup', stopDrawing);
+        window.addEventListener('mouseleave', stopDrawing);
+    }
 });
