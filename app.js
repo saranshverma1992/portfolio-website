@@ -197,19 +197,33 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // Project cards parallax glow shift
+    // Project cards interactive 3D tilt and mouse spotlight coordinates
     const projectCards = document.querySelectorAll('.project-card');
     projectCards.forEach(card => {
         card.addEventListener('mousemove', (e) => {
             const rect = card.getBoundingClientRect();
-            const x = ((e.clientX - rect.left) / rect.width) * 30 - 15; // Shift between -15px to 15px
-            const y = ((e.clientY - rect.top) / rect.height) * 30 - 15;
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
             
-            card.style.setProperty('--p-hover-x', `${x}px`);
-            card.style.setProperty('--p-hover-y', `${y}px`);
+            // Mouse spotlight coordinates
+            card.style.setProperty('--mouse-x', `${x}px`);
+            card.style.setProperty('--mouse-y', `${y}px`);
+            
+            // 3D Tilt calculation (subtle 4 degree rotation max)
+            const rotX = ((y / rect.height) * 8 - 4).toFixed(1);
+            const rotY = ((4 - (x / rect.width) * 8)).toFixed(1);
+            
+            card.style.transform = `perspective(1000px) rotateX(${rotX}deg) rotateY(${rotY}deg) translateY(-6px)`;
+            
+            // Logo glow parallax coordinate
+            const glowX = ((x / rect.width) * 20 - 10).toFixed(1);
+            const glowY = ((y / rect.height) * 20 - 10).toFixed(1);
+            card.style.setProperty('--p-hover-x', `${glowX}px`);
+            card.style.setProperty('--p-hover-y', `${glowY}px`);
         });
         
         card.addEventListener('mouseleave', () => {
+            card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) translateY(0)';
             card.style.setProperty('--p-hover-x', '0px');
             card.style.setProperty('--p-hover-y', '0px');
         });
@@ -562,11 +576,11 @@ document.addEventListener('DOMContentLoaded', () => {
             
             // Glowing neon stroke
             const currentTheme = document.documentElement.getAttribute('data-theme') || 'dark';
-            dCtx.strokeStyle = currentTheme === 'light' ? '#3b82f6' : '#a855f7';
+            dCtx.strokeStyle = currentTheme === 'light' ? '#000000' : '#ffffff';
             dCtx.lineWidth = 4;
             dCtx.lineCap = 'round';
             dCtx.lineJoin = 'round';
-            dCtx.shadowColor = currentTheme === 'light' ? 'rgba(59, 130, 246, 0.6)' : 'rgba(168, 85, 247, 0.8)';
+            dCtx.shadowColor = currentTheme === 'light' ? 'rgba(0, 0, 0, 0.4)' : 'rgba(255, 255, 255, 0.8)';
             dCtx.shadowBlur = 8;
             
             dCtx.stroke();
@@ -594,7 +608,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 } else {
                     drawCanvas.style.opacity = canvasOpacity;
                 }
-            }, 30); // ~33fps transition
+            }, 30);
         };
         
         window.addEventListener('mouseup', stopDrawing);

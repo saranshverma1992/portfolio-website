@@ -16,10 +16,10 @@
     --text-muted: #626770;
     
     --color-accent: #ffffff;
-    --color-purple: #a855f7;
-    --color-blue: #3b82f6;
-    --color-glow-1: rgba(168, 85, 247, 0.12);
-    --color-glow-2: rgba(59, 130, 246, 0.08);
+    --color-purple: #16ffe0; /* Primary Accent: Vibrant Neon Cyan */
+    --color-blue: #cbd5e1; /* Secondary Accent: Slate Silver */
+    --color-glow-1: rgba(22, 255, 224, 0.15); /* Accent Glow */
+    --color-glow-2: rgba(22, 255, 224, 0.05);
     
     --grid-color-dot: rgba(255, 255, 255, 0.04);
     --grid-color-line: rgba(255, 255, 255, 0.015);
@@ -49,8 +49,10 @@
     --text-muted: #8c939e;
     
     --color-accent: #121214;
-    --color-glow-1: rgba(168, 85, 247, 0.06);
-    --color-glow-2: rgba(59, 130, 246, 0.04);
+    --color-purple: #0ea5e9; /* Primary Accent: Deep Legible Cyan */
+    --color-blue: #475569; /* Secondary Accent: Slate */
+    --color-glow-1: rgba(14, 165, 233, 0.08); /* Accent Glow */
+    --color-glow-2: rgba(14, 165, 233, 0.03);
     
     --grid-color-dot: rgba(0, 0, 0, 0.03);
     --grid-color-line: rgba(0, 0, 0, 0.01);
@@ -105,7 +107,7 @@ body {
     width: 350px;
     height: 350px;
     border-radius: 50%;
-    background: radial-gradient(circle, rgba(168, 85, 247, 0.06) 0%, rgba(59, 130, 246, 0.03) 40%, transparent 70%);
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.03) 40%, transparent 70%);
     pointer-events: none;
     z-index: 9998;
     transform: translate(-50%, -50%);
@@ -133,17 +135,17 @@ body:hover .cursor-glow {
 .pencil-cursor {
     width: 20px;
     height: 20px;
-    color: var(--color-purple, #a855f7);
+    color: var(--color-purple, #ffffff);
     /* Offset so the bottom-left tip aligns with the mouse position */
     transform: translate(0px, -20px) rotate(0deg); 
-    filter: drop-shadow(0 0 4px rgba(168, 85, 247, 0.6));
+    filter: drop-shadow(0 0 4px rgba(255, 255, 255, 0.6));
     transition: transform 0.15s cubic-bezier(0.16, 1, 0.3, 1), color 0.3s ease;
 }
 
 .custom-cursor.drawing .pencil-cursor {
     transform: translate(0px, -20px) rotate(-15deg) scale(0.9);
-    color: var(--color-blue, #3b82f6);
-    filter: drop-shadow(0 0 6px rgba(59, 130, 246, 0.8));
+    color: var(--color-purple);
+    filter: drop-shadow(0 0 6px rgba(22, 255, 224, 0.8));
 }
 
 .cursor-label {
@@ -170,8 +172,8 @@ body:hover .cursor-glow {
 /* When hovering over the Profile Image (Card) */
 .custom-cursor.cursor-active-profile .pencil-cursor {
     transform: translate(0px, -20px) scale(1.2);
-    color: var(--color-blue, #3b82f6);
-    filter: drop-shadow(0 0 8px rgba(59, 130, 246, 0.8));
+    color: var(--color-blue, #cbd5e1);
+    filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.8));
 }
 
 .custom-cursor.cursor-active-profile .cursor-label {
@@ -280,14 +282,14 @@ body:hover .cursor-glow {
 .bg-glow-1 {
     top: -200px;
     right: -100px;
-    background: radial-gradient(circle, rgba(168, 85, 247, 0.22) 0%, rgba(59, 130, 246, 0.05) 60%, transparent 100%);
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.12) 0%, rgba(255, 255, 255, 0.03) 60%, transparent 100%);
     animation: float-orb-1 28s infinite ease-in-out;
 }
 
 .bg-glow-2 {
     bottom: -150px;
     left: -100px;
-    background: radial-gradient(circle, rgba(59, 130, 246, 0.20) 0%, rgba(168, 85, 247, 0.05) 60%, transparent 100%);
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.10) 0%, rgba(255, 255, 255, 0.03) 60%, transparent 100%);
     animation: float-orb-2 32s infinite ease-in-out;
 }
 
@@ -296,7 +298,7 @@ body:hover .cursor-glow {
     left: 30%;
     width: 800px;
     height: 800px;
-    background: radial-gradient(circle, rgba(168, 85, 247, 0.08) 0%, rgba(59, 130, 246, 0.08) 50%, transparent 100%);
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.04) 0%, rgba(255, 255, 255, 0.03) 50%, transparent 100%);
     filter: blur(180px);
     animation: float-orb-3 36s infinite ease-in-out;
 }
@@ -359,7 +361,7 @@ p {
 }
 
 .gradient-text {
-    background: linear-gradient(135deg, #ffffff 10%, #a855f7 50%, #3b82f6 90%);
+    background: linear-gradient(135deg, #ffffff 20%, #e2e8f0 50%, #94a3b8 80%);
     background-size: 200% auto;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -1970,33 +1972,82 @@ p {
 }
 
 .projects-grid {
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+    padding-bottom: 2rem;
 }
 
 .project-card {
     display: flex;
+    flex-direction: row;
     align-items: center;
     gap: 2.5rem;
     text-decoration: none;
     color: inherit;
     border: 1px solid var(--border-color);
-    background: var(--bg-card);
-    border-radius: 20px;
-    padding: 1.8rem 2.2rem;
+    background: rgba(255, 255, 255, 0.005);
+    border-radius: 24px;
+    padding: 2.2rem 2.6rem;
     backdrop-filter: blur(24px);
     -webkit-backdrop-filter: blur(24px);
-    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    transition: border-color 0.4s ease, background 0.4s ease, box-shadow 0.4s ease, transform 0.15s ease-out;
     position: relative;
     overflow: hidden;
 }
 
+/* Bento Grid Card Spanning */
+.project-card:nth-child(1),
+.project-card:nth-child(4) {
+    grid-column: span 2;
+}
+
+.project-card:nth-child(2),
+.project-card:nth-child(3) {
+    grid-column: span 1;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1.8rem;
+}
+
+.project-card:nth-child(2) .project-image-placeholder,
+.project-card:nth-child(3) .project-image-placeholder {
+    width: 100%;
+    height: 180px;
+    border-radius: 14px;
+}
+
+.project-card:nth-child(2) .project-info,
+.project-card:nth-child(3) .project-info {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1.5rem;
+}
+
 .project-card:hover {
-    border-color: var(--border-hover);
-    background: var(--bg-card-hover);
-    transform: translateX(12px);
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+    border-color: rgba(22, 255, 224, 0.3);
+    background: rgba(22, 255, 224, 0.005);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.25),
+                0 0 15px rgba(22, 255, 224, 0.01);
+}
+
+/* Neon Spotlight Glow */
+.project-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(800px circle at var(--mouse-x, 0) var(--mouse-y, 0), rgba(22, 255, 224, 0.08), transparent 45%);
+    z-index: 1;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+}
+
+.project-card:hover::before {
+    opacity: 1;
 }
 
 /* Left Art Visual Thumbnail */
@@ -2133,15 +2184,22 @@ p {
 }
 
 .project-meta span {
-    font-size: 0.7rem;
-    font-weight: 600;
+    font-size: 0.68rem;
+    font-weight: 500;
     text-transform: uppercase;
     letter-spacing: 0.05em;
     color: var(--text-secondary);
     border: 1px solid var(--border-color);
     padding: 0.15rem 0.5rem;
     border-radius: 6px;
-    background: rgba(255, 255, 255, 0.02);
+    background: rgba(255, 255, 255, 0.01);
+    transition: all 0.3s ease;
+}
+
+.project-card:hover .project-meta span {
+    color: #16ffe0;
+    border-color: rgba(22, 255, 224, 0.35);
+    background: rgba(22, 255, 224, 0.04);
 }
 
 .project-info h3 {
@@ -2160,14 +2218,15 @@ p {
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
-    color: var(--text-primary);
-    font-weight: 600;
-    font-size: 0.95rem;
+    color: var(--text-secondary);
+    font-weight: 500;
+    font-size: 0.9rem;
     transition: var(--transition-fast);
 }
 
 .project-card:hover .project-cta-link {
-    color: var(--color-purple);
+    color: #16ffe0;
+    text-shadow: 0 0 8px rgba(22, 255, 224, 0.4);
 }
 
 .project-cta-link svg {
@@ -2528,7 +2587,7 @@ p {
     font-size: 3.5rem;
     font-weight: 800;
     margin-bottom: 0.8rem;
-    background: linear-gradient(135deg, #ffffff 40%, #a855f7 100%);
+    background: linear-gradient(135deg, #ffffff 40%, var(--color-blue) 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
@@ -4007,9 +4066,9 @@ p {
 }
 
 .accordion-item.active {
-    border-color: rgba(168, 85, 247, 0.4);
+    border-color: rgba(22, 255, 224, 0.25);
     background: rgba(255, 255, 255, 0.02);
-    box-shadow: 0 4px 20px rgba(168, 85, 247, 0.05);
+    box-shadow: 0 4px 20px rgba(22, 255, 224, 0.04);
 }
 
 .accordion-header {
@@ -4055,8 +4114,8 @@ p {
 }
 
 .accordion-item.active .accordion-icon {
-    border-color: rgba(168, 85, 247, 0.3);
-    background: rgba(168, 85, 247, 0.05);
+    border-color: rgba(22, 255, 224, 0.3);
+    background: rgba(22, 255, 224, 0.05);
     color: var(--color-purple);
 }
 
@@ -4446,7 +4505,7 @@ p {
 .floating-cv-cta:hover {
     width: 160px;
     transform: translateY(-4px);
-    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4), 0 0 25px rgba(255, 255, 255, 0.2);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4), 0 0 25px rgba(22, 255, 224, 0.25);
 }
 
 .floating-cv-cta .cta-icon {
@@ -4525,7 +4584,7 @@ p {
     top: 0;
     left: 0;
     height: 3px;
-    background: linear-gradient(90deg, #a855f7, #3b82f6);
+    background: linear-gradient(90deg, var(--color-purple), var(--color-blue));
     z-index: 10100;
     width: 0%;
     transition: width 0.1s ease;
@@ -4892,7 +4951,7 @@ p {
 }
 
 .augmented-bar {
-    background: linear-gradient(to right, var(--color-purple), var(--color-blue));
+    background: linear-gradient(to right, rgba(255, 255, 255, 0.4), var(--color-purple));
 }
 
 .savings-badge {
@@ -4901,11 +4960,11 @@ p {
     top: 1.5rem;
     font-size: 0.75rem;
     font-weight: 700;
-    color: #22c55e;
-    background: rgba(34, 197, 94, 0.1);
+    color: var(--color-purple);
+    background: rgba(22, 255, 224, 0.08);
     padding: 0.2rem 0.6rem;
     border-radius: 20px;
-    border: 1px solid rgba(34, 197, 94, 0.2);
+    border: 1px solid rgba(22, 255, 224, 0.18);
 }
 
 /* Merged Card Styling */
