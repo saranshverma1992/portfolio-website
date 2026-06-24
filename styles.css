@@ -130,13 +130,20 @@ body:hover .cursor-glow {
     transition: transform 0.1s ease-out;
 }
 
-.cursor-dot {
-    width: 8px;
-    height: 8px;
-    background-color: var(--color-purple, #a855f7);
-    border-radius: 50%;
-    box-shadow: 0 0 10px rgba(168, 85, 247, 0.6);
-    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+.pencil-cursor {
+    width: 20px;
+    height: 20px;
+    color: var(--color-purple, #a855f7);
+    /* Offset so the bottom-left tip aligns with the mouse position */
+    transform: translate(0px, -20px) rotate(0deg); 
+    filter: drop-shadow(0 0 4px rgba(168, 85, 247, 0.6));
+    transition: transform 0.15s cubic-bezier(0.16, 1, 0.3, 1), color 0.3s ease;
+}
+
+.custom-cursor.drawing .pencil-cursor {
+    transform: translate(0px, -20px) rotate(-15deg) scale(0.9);
+    color: var(--color-blue, #3b82f6);
+    filter: drop-shadow(0 0 6px rgba(59, 130, 246, 0.8));
 }
 
 .cursor-label {
@@ -161,15 +168,27 @@ body:hover .cursor-glow {
 }
 
 /* When hovering over the Profile Image (Card) */
-.custom-cursor.cursor-active-profile .cursor-dot {
-    transform: scale(2);
-    background-color: var(--color-blue, #3b82f6);
-    box-shadow: 0 0 15px rgba(59, 130, 246, 0.8);
+.custom-cursor.cursor-active-profile .pencil-cursor {
+    transform: translate(0px, -20px) scale(1.2);
+    color: var(--color-blue, #3b82f6);
+    filter: drop-shadow(0 0 8px rgba(59, 130, 246, 0.8));
 }
 
 .custom-cursor.cursor-active-profile .cursor-label {
     opacity: 1;
     transform: translateX(0);
+}
+
+/* Drawing Canvas Overlay styling */
+.drawing-canvas-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    pointer-events: none;
+    z-index: 9995;
+    transition: opacity 0.3s ease-out;
 }
 
 /* Hide default cursor only when custom cursor is active / hover features look premium */
@@ -833,7 +852,7 @@ p {
     font-family: var(--font-heading);
     font-size: 0.95rem;
     font-weight: 600;
-    color: var(--text-secondary);
+    color: #ffffff;
     transition: var(--transition-smooth);
     min-width: 150px;
     flex-grow: 1;
@@ -841,9 +860,9 @@ p {
 }
 
 .logo-card-item:hover {
-    color: var(--text-primary);
-    border-color: var(--border-hover);
-    background: rgba(255, 255, 255, 0.02);
+    color: var(--color-purple);
+    border-color: rgba(168, 85, 247, 0.4);
+    background: rgba(168, 85, 247, 0.05);
 }
 
 .logo-card-item.highlight-node {
@@ -871,6 +890,7 @@ p {
 
 [data-theme="light"] .logo-card-item {
     background: rgba(0, 0, 0, 0.02);
+    color: var(--text-primary);
 }
 
 [data-theme="light"] .logo-card-item.highlight-node {
