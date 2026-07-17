@@ -1,0 +1,3176 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simplify AI Case Study — Saransh Verma</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@400;500;600;700;800&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    
+    <!-- Inline Styles for Self-Containment and Speed -->
+    <style>
+        :root {
+            --bg-base: #021526;
+            --bg-card: rgba(10, 26, 46, 0.55);
+            --bg-card-hover: rgba(16, 36, 61, 0.7);
+            --border-color: rgba(0, 80, 252, 0.12);
+            --border-hover: rgba(0, 80, 252, 0.35);
+            --text-primary: #ffffff;
+            --text-secondary: #94a3b8;
+            --color-purple: #0050FC; /* electric blue primary */
+            --color-blue: #0050FC;
+            --color-green: #10b981;
+            --color-red: #ef4444;
+            --transition-smooth: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+            --transition-fast: all 0.2s ease;
+            --font-heading: 'Outfit', sans-serif;
+            --font-body: 'Inter', sans-serif;
+        }
+
+        /* Base Reset */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            scrollbar-width: thin;
+            scrollbar-color: var(--color-purple) var(--bg-base);
+        }
+
+        body {
+            background-color: var(--bg-base);
+            color: var(--text-primary);
+            font-family: var(--font-body);
+            line-height: 1.6;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Scroll Progress Bar */
+        .scroll-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--color-blue), var(--color-purple));
+            width: 0%;
+            z-index: 10000;
+            transition: width 0.1s ease-out;
+        }
+
+        /* Layout Utilities */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .section-label {
+            font-family: var(--font-heading);
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            color: var(--color-purple);
+            margin-bottom: 0.8rem;
+            font-weight: 600;
+        }
+
+        .section-title {
+            font-family: var(--font-heading);
+            font-size: 2.2rem;
+            font-weight: 800;
+            letter-spacing: -0.02em;
+            line-height: 1.2;
+            margin-bottom: 1rem;
+        }
+
+        .section-subtitle {
+            color: var(--text-secondary);
+            font-size: 1.05rem;
+            max-width: 700px;
+            margin-bottom: 2.5rem;
+        }
+
+        /* Glassmorphism Cards */
+        .glass-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            transition: var(--transition-smooth);
+        }
+
+        .glass-card:hover {
+            border-color: var(--border-hover);
+            box-shadow: 0 15px 35px rgba(0, 80, 252, 0.05);
+        }
+
+        /* Background Glows */
+        .bg-glow {
+            position: absolute;
+            width: 400px;
+            height: 400px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(0, 80, 252, 0.05) 0%, transparent 70%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* Header Navbar */
+        .case-nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(3, 3, 3, 0.75);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border-color);
+            z-index: 999;
+            padding: 1rem 0;
+        }
+
+        .case-nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .back-btn {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-decoration: none;
+            color: var(--text-secondary);
+            font-weight: 500;
+            font-size: 0.9rem;
+            transition: var(--transition-fast);
+        }
+
+        .back-btn:hover {
+            color: var(--color-purple);
+            transform: translateX(-4px);
+        }
+
+        .case-nav-title {
+            font-family: var(--font-heading);
+            font-weight: 700;
+            font-size: 1rem;
+            letter-spacing: -0.01em;
+        }
+
+        /* Scroll Reveal Animation */
+        .reveal-section {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+            position: relative;
+            z-index: 2;
+        }
+
+        .reveal-section.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* 3D Tilt Wrapper */
+        .tilt-wrapper {
+            transform-style: preserve-3d;
+            perspective: 1000px;
+        }
+
+        /* --- SECTION 1: COVER --- */
+        .sec-cover {
+            padding: 90px 0 35px 0;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            position: relative;
+            background-image: linear-gradient(rgba(3, 3, 3, 0.65), rgba(3, 3, 3, 0.65)), url('media__1783062461844.png');
+            background-size: cover;
+            background-position: center;
+            width: 100%;
+            overflow: hidden;
+            box-sizing: border-box;
+        }
+
+        .cover-layout {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            flex: 1;
+            width: 100%;
+            max-width: 1440px;
+        }
+
+        .cover-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 2.5rem;
+            margin-top: auto;
+            margin-bottom: auto;
+            text-align: center;
+            position: relative;
+            z-index: 10;
+        }
+
+        .cover-left {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .hex-logo {
+            width: 72px;
+            height: 72px;
+            background: url('media__1783084178112.png') no-repeat center;
+            background-size: contain;
+            box-shadow: none;
+            clip-path: none;
+            border: none;
+        }
+
+        /* Tablet Mockup Image */
+        .tablet-mockup-img {
+            max-width: 95%;
+            width: 1380px;
+            height: auto;
+            transform: rotateX(0deg) rotateY(0deg) rotateZ(0deg);
+            transform-style: preserve-3d;
+            transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+            filter: drop-shadow(0 30px 50px rgba(0,0,0,0.85));
+            border-radius: 24px;
+        }
+
+        .tablet-mockup-img:hover {
+            transform: rotateX(12deg) rotateY(-18deg) rotateZ(3deg) scale(1.01);
+        }
+        /* Stat Bar */
+        .cover-stat-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem 2rem;
+            border: 1px solid var(--border-color);
+            background: rgba(255, 255, 255, 0.02);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-radius: 100px;
+            margin-top: 4rem;
+            position: relative;
+            z-index: 10;
+        }
+
+        .stat-col {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 0.5rem;
+        }
+
+        .stat-col-inner {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .stat-label {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--text-secondary);
+        }
+
+        .stat-val-pill {
+            font-family: var(--font-heading);
+            font-weight: 600;
+            font-size: 0.82rem;
+            padding: 0.35rem 0.8rem;
+            background: rgba(3, 3, 3, 0.6);
+            border: 1px solid var(--border-color);
+            border-radius: 100px;
+            color: var(--text-primary);
+        }
+
+        .stat-val-pills {
+            display: flex;
+            gap: 0.3rem;
+            flex-wrap: wrap;
+        }
+
+        /* --- SECTION 2: INTRO QUOTE --- */
+        .sec-intro {
+            padding: 140px 0;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .intro-profile {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .profile-img-circle {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: #1c1c1f;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            border: 1px solid var(--border-hover);
+        }
+        
+        .profile-img-circle img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .profile-info {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .profile-name {
+            font-family: var(--font-heading);
+            font-weight: 700;
+            font-size: 1rem;
+        }
+
+        .profile-title {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+
+        .large-pull-quote {
+            font-family: var(--font-heading);
+            font-size: 2.2rem;
+            font-weight: 700;
+            line-height: 1.3;
+            letter-spacing: -0.02em;
+            max-width: 1000px;
+            margin-bottom: 3.5rem;
+            color: var(--text-primary);
+        }
+
+        .research-label-green {
+            color: var(--color-green);
+            font-family: var(--font-heading);
+            font-weight: 700;
+            font-size: 0.75rem;
+            letter-spacing: 0.1em;
+            margin-bottom: 1.5rem;
+        }
+
+        .research-stat-grid {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 1.2rem;
+        }
+
+        .research-stat-card {
+            padding: 1.5rem;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .research-icon {
+            color: var(--color-green);
+            font-size: 1.5rem;
+            margin-bottom: 0.2rem;
+        }
+
+        .research-num {
+            font-family: var(--font-heading);
+            font-weight: 800;
+            font-size: 1.5rem;
+        }
+
+        .research-desc {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            line-height: 1.3;
+        }
+
+        /* --- SECTION 3: WHY SIMPLIFY EXISTS --- */
+        .sec-why {
+            padding: 140px 0;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .why-comparison {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2.5rem;
+            margin-top: 2rem;
+        }
+
+        .why-panel {
+            padding: 3rem;
+            border-radius: 20px;
+            background: rgba(10, 26, 46, 0.45);
+            border: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            position: relative;
+            transition: var(--transition-smooth);
+        }
+
+        .why-panel.before {
+            border-color: rgba(239, 68, 68, 0.15);
+            background: linear-gradient(180deg, rgba(239, 68, 68, 0.01) 0%, transparent 100%);
+        }
+
+        .why-panel.after {
+            border-color: rgba(16, 185, 129, 0.15);
+            background: linear-gradient(180deg, rgba(16, 185, 129, 0.01) 0%, transparent 100%);
+        }
+
+        .before-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 0.6rem;
+        }
+
+        .before-list li {
+            font-size: 0.88rem;
+            color: var(--text-secondary);
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            padding: 0.75rem 1rem;
+            background: rgba(3, 3, 3, 0.35);
+            border: 1px solid rgba(255, 255, 255, 0.03);
+            border-radius: 8px;
+            transition: var(--transition-fast);
+        }
+
+        .before-list li:hover {
+            border-color: rgba(239, 68, 68, 0.2);
+            transform: translateX(4px);
+            color: var(--text-primary);
+        }
+
+        .before-list span {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: rgba(239, 68, 68, 0.1);
+            color: var(--color-red);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+            font-weight: 700;
+        }
+
+        .why-center-pill {
+            margin-top: 2rem;
+            padding: 0.8rem;
+            background: rgba(239, 68, 68, 0.08);
+            border: 1px solid rgba(239, 68, 68, 0.2);
+            border-radius: 8px;
+            text-align: center;
+            font-family: var(--font-heading);
+            font-weight: 700;
+            font-size: 0.85rem;
+            color: var(--color-red);
+            letter-spacing: 0.02em;
+        }
+
+        .after-workflow {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+            flex: 1;
+            justify-content: center;
+        }
+
+        .after-step {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            padding: 0.6rem 1.2rem;
+            background: rgba(3, 3, 3, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.02);
+            border-radius: 100px;
+        }
+
+        .after-step strong {
+            color: var(--text-primary);
+        }
+
+        .after-glow-card {
+            width: 100%;
+            background: rgba(16, 185, 129, 0.03);
+            border: 1px solid rgba(16, 185, 129, 0.35);
+            border-radius: 16px;
+            padding: 1.8rem;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(16, 185, 129, 0.05);
+            position: relative;
+        }
+
+        .after-glow-title {
+            font-family: var(--font-heading);
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--color-green);
+            margin-bottom: 0.4rem;
+        }
+
+        .after-glow-desc {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            line-height: 1.4;
+        }
+
+        .after-arrow {
+            color: var(--color-green);
+            opacity: 0.6;
+            font-size: 1.1rem;
+        }
+
+        .after-stat {
+            width: 100%;
+            margin-top: 2rem;
+            padding: 0.8rem;
+            background: rgba(16, 185, 129, 0.08);
+            border: 1px solid rgba(16, 185, 129, 0.2);
+            border-radius: 8px;
+            text-align: center;
+            font-family: var(--font-heading);
+            font-weight: 700;
+            font-size: 0.85rem;
+            color: var(--color-green);
+            letter-spacing: 0.02em;
+        }
+
+        /* --- SECTION 4: RESEARCH & DISCOVERY --- */
+        .sec-research {
+            padding: 140px 0;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .tag-pill-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.6rem;
+            margin-bottom: 2.5rem;
+        }
+
+        .tag-pill {
+            font-size: 0.75rem;
+            font-weight: 500;
+            padding: 0.35rem 0.8rem;
+            border-radius: 100px;
+            border: 1px solid var(--border-color);
+            background: rgba(255, 255, 255, 0.02);
+            color: var(--text-secondary);
+        }
+
+        .research-panel-row {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.5rem;
+            margin-bottom: 4rem;
+        }
+
+        .research-panel-card {
+            padding: 2rem 1.8rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1.2rem;
+        }
+
+        .panel-icon-title {
+            font-family: var(--font-heading);
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+
+        .panel-badges {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.4rem;
+        }
+
+        .panel-badge {
+            font-size: 0.65rem;
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-color);
+            color: var(--text-secondary);
+        }
+
+        .panel-body-text {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            line-height: 1.5;
+        }
+
+        /* Standard Deviation Graph removed */
+
+        .flow-chip-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            padding: 0.4rem;
+            font-size: 0.7rem;
+        }
+
+        /* Role section */
+        .role-section {
+            border-top: 1px solid var(--border-color);
+            padding-top: 3rem;
+        }
+
+        .role-title-row {
+            font-family: var(--font-heading);
+            font-size: 1rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            margin-bottom: 1.8rem;
+        }
+
+        .role-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+        }
+
+        .role-item {
+            padding-bottom: 0.5rem;
+            border-bottom: 1.5px solid var(--border-color);
+            position: relative;
+        }
+
+        .role-item::after {
+            content: '';
+            position: absolute;
+            bottom: -1.5px;
+            left: 0;
+            width: 40px;
+            height: 1.5px;
+            background: var(--color-purple);
+        }
+
+        .role-item-name {
+            font-family: var(--font-heading);
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+
+        /* --- SECTION 5: STRATEGY --- */
+        .sec-strategy {
+            padding: 140px 0;
+            border-top: 1px solid var(--border-color);
+            background: radial-gradient(circle at 50% 50%, rgba(0, 80, 252, 0.02) 0%, transparent 60%);
+        }
+
+        .strategy-map {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 500px;
+            position: relative;
+            margin: 2rem 0;
+        }
+
+        .strategy-connectors {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .strategy-center {
+            width: 160px;
+            height: 160px;
+            border-radius: 50%;
+            background: var(--bg-base);
+            border: 2px dashed var(--color-purple);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 1.5rem;
+            z-index: 10;
+            box-shadow: 0 0 40px rgba(0, 80, 252, 0.1);
+        }
+
+        .center-badge-title {
+            font-family: var(--font-heading);
+            font-weight: 800;
+            font-size: 0.9rem;
+            letter-spacing: 0.05em;
+            color: var(--color-purple);
+        }
+
+        .center-badge-sub {
+            font-size: 0.65rem;
+            color: var(--text-secondary);
+            margin-top: 0.2rem;
+        }
+
+        .strategy-card {
+            position: absolute;
+            width: 280px;
+            padding: 1.8rem;
+            z-index: 5;
+        }
+
+        /* Position cards around center */
+        .strat-1 { top: 10%; left: 10%; }
+        .strat-2 { top: 10%; right: 10%; }
+        .strat-3 { bottom: 10%; left: 10%; }
+        .strat-4 { bottom: 10%; right: 10%; }
+
+        .strat-card-title {
+            font-family: var(--font-heading);
+            font-weight: 700;
+            font-size: 0.95rem;
+            color: var(--text-primary);
+            margin-bottom: 0.4rem;
+        }
+
+        .strat-card-desc {
+            font-size: 0.78rem;
+            color: var(--text-secondary);
+            line-height: 1.4;
+        }
+
+        .insight-banner {
+            margin-top: 4rem;
+            padding: 1.8rem;
+            border-radius: 12px;
+            border: 1px solid rgba(16, 185, 129, 0.15);
+            background: rgba(16, 185, 129, 0.02);
+            text-align: center;
+        }
+
+        .insight-tag {
+            font-family: var(--font-heading);
+            font-weight: 700;
+            font-size: 0.75rem;
+            letter-spacing: 0.08em;
+            color: var(--color-green);
+            margin-bottom: 0.4rem;
+        }
+
+        .insight-quote {
+            font-family: var(--font-heading);
+            font-size: 1.4rem;
+            font-style: italic;
+            font-weight: 600;
+        }
+
+        /* --- SECTION 6: INFORMATION ARCHITECTURE --- */
+        .sec-ia {
+            padding: 140px 0;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .ia-flow-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-top: 4rem;
+            position: relative;
+            padding: 2rem 0;
+            height: auto;
+        }
+
+        .ia-connector-line {
+            flex: 1;
+            height: 2px;
+            border-top: 2px dashed var(--border-color);
+            min-width: 20px;
+            position: relative;
+        }
+
+        .ia-connector-line::before, .ia-connector-line::after {
+            content: '';
+            position: absolute;
+            top: -4px;
+            width: 6px;
+            height: 6px;
+            background: #0050FC;
+            border-radius: 50%;
+            box-shadow: 0 0 8px #0050FC;
+        }
+        .ia-connector-line::before { left: 0; }
+        .ia-connector-line::after { right: 0; }
+
+        .ia-card {
+            width: 250px;
+            padding: 1.5rem;
+            border-radius: 14px;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--border-color);
+            position: relative;
+            z-index: 5;
+        }
+
+        .ia-card-header {
+            font-family: var(--font-heading);
+            font-weight: 700;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+        }
+
+        .ia-card-items {
+            display: flex;
+            flex-direction: column;
+            gap: 0.6rem;
+        }
+
+        .ia-item {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            padding: 0.4rem 0.6rem;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+        }
+
+        .ia-branch-column {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            position: relative;
+            padding: 0 2.5rem;
+        }
+
+        /* Vertical line on the left side of the branch stack */
+        .ia-branch-column::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 25px;
+            bottom: 25px;
+            width: 2px;
+            border-left: 2px dashed var(--border-color);
+        }
+
+        /* Vertical line on the right side of the branch stack */
+        .ia-branch-column::after {
+            content: '';
+            position: absolute;
+            right: 0;
+            top: 25px;
+            bottom: 25px;
+            width: 2px;
+            border-right: 2px dashed var(--border-color);
+        }
+
+        .ia-branch-column .ia-card {
+            width: 220px;
+            padding: 1.2rem;
+            position: relative;
+        }
+
+        /* Horizontal link line from left edge of card to left vertical line */
+        .ia-branch-column .ia-card::before {
+            content: '';
+            position: absolute;
+            left: -2.5rem;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 2.5rem;
+            height: 2px;
+            border-top: 2px dashed var(--border-color);
+        }
+
+        /* Horizontal link line from right edge of card to right vertical line */
+        .ia-branch-column .ia-card::after {
+            content: '';
+            position: absolute;
+            right: -2.5rem;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 2.5rem;
+            height: 2px;
+            border-top: 2px dashed var(--border-color);
+        }
+
+        .ia-engine-circle {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background: var(--bg-base);
+            border: 2px solid var(--color-purple);
+            box-shadow: 0 0 30px rgba(0, 80, 252, 0.15);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            z-index: 10;
+        }
+
+        .ia-engine-title {
+            font-family: var(--font-heading);
+            font-weight: 800;
+            font-size: 0.9rem;
+            letter-spacing: 0.05em;
+            color: var(--color-purple);
+        }
+
+        .ia-legend-box {
+            position: absolute;
+            top: 110%;
+            width: 200px;
+            padding: 0.8rem;
+            border-radius: 8px;
+            background: #09090b;
+            border: 1px solid var(--border-color);
+            font-size: 0.65rem;
+            color: var(--text-secondary);
+            text-align: center;
+            line-height: 1.4;
+        }
+
+        .ia-arrow-connector {
+            flex: 1;
+            height: 2px;
+            border-top: 2px dashed var(--border-color);
+            margin: 0 1rem;
+            position: relative;
+        }
+
+        /* --- SECTION 7: USER EXPERIENCE / WORKFLOW --- */
+        .sec-workflow {
+            padding: 140px 0;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .workflow-timeline {
+            display: flex;
+            flex-direction: column;
+            gap: 2.5rem;
+            margin-top: 3rem;
+        }
+
+        .workflow-row {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 1.2rem;
+        }
+
+        .workflow-card {
+            padding: 1.5rem 1.2rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+            position: relative;
+        }
+
+        .workflow-badge-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .wf-badge {
+            font-size: 0.65rem;
+            font-weight: 700;
+            padding: 0.15rem 0.4rem;
+            border-radius: 4px;
+        }
+        .wf-badge.ba { background: rgba(14, 165, 233, 0.1); color: var(--color-blue); }
+        .wf-badge.ai { background: rgba(0, 80, 252, 0.1); color: var(--color-purple); }
+
+        .wf-time {
+            font-size: 0.65rem;
+            color: var(--text-secondary);
+        }
+
+        .wf-num {
+            font-family: var(--font-heading);
+            font-weight: 800;
+            font-size: 1.2rem;
+            color: rgba(255, 255, 255, 0.08);
+            position: absolute;
+            top: 1rem;
+            right: 1.2rem;
+        }
+
+        .wf-card-title {
+            font-family: var(--font-heading);
+            font-weight: 700;
+            font-size: 0.85rem;
+            margin-top: 0.4rem;
+        }
+
+        .wf-card-desc {
+            font-size: 0.72rem;
+            color: var(--text-secondary);
+            line-height: 1.4;
+        }
+
+        .workflow-card.highlight {
+            border-color: var(--color-purple);
+            background: rgba(0, 80, 252, 0.03);
+            box-shadow: 0 0 20px rgba(0, 80, 252, 0.08);
+        }
+
+        .workflow-divider-pill {
+            text-align: center;
+            font-family: var(--font-heading);
+            font-weight: 700;
+            font-size: 0.75rem;
+            letter-spacing: 0.1em;
+            color: var(--color-purple);
+            text-transform: uppercase;
+            padding: 0.6rem;
+            background: rgba(0, 80, 252, 0.05);
+            border: 1px solid rgba(0, 80, 252, 0.12);
+            border-radius: 30px;
+            width: 250px;
+            margin: 1rem auto;
+        }
+
+        /* --- SECTION 8: CORE FEATURES --- */
+        .sec-features {
+            padding: 140px 0;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .features-grid-3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .feature-column {
+            display: flex;
+            flex-direction: column;
+            gap: 1.8rem;
+        }
+
+        .feature-header-pill {
+            font-family: var(--font-heading);
+            font-weight: 700;
+            font-size: 0.95rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        .feature-mock-panel {
+            aspect-ratio: 4/3;
+            background: #09090b;
+            border: 1.5px dashed var(--border-color);
+            border-radius: 12px;
+            padding: 1.2rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            overflow: hidden;
+        }
+
+        /* Chat mock inside Column 1 */
+        .mock-chat-header {
+            font-size: 0.7rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .mock-chat-bubble {
+            font-size: 0.7rem;
+            padding: 0.6rem;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 8px;
+            align-self: flex-start;
+            max-width: 90%;
+            text-align: left;
+        }
+
+        .mock-chat-input-area {
+            background: rgba(255, 255, 255, 0.01);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            padding: 0.4rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.4rem;
+        }
+
+        .mock-textarea {
+            font-size: 0.65rem;
+            color: var(--text-secondary);
+            border: none;
+            background: transparent;
+            resize: none;
+            outline: none;
+        }
+
+        .mock-btn-row {
+            display: flex;
+            justify-content: flex-end;
+            gap: 0.4rem;
+        }
+
+        .mock-sm-btn {
+            font-size: 0.6rem;
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            font-weight: 600;
+        }
+        .mock-sm-btn.primary { background: var(--color-purple); color: #000; }
+        .mock-sm-btn.secondary { background: rgba(255,255,255,0.05); color: var(--text-secondary); border: 1px solid var(--border-color); }
+
+        /* Workspace mock inside Column 2 */
+        .mock-form-step {
+            font-size: 0.7rem;
+            font-weight: 700;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .mock-form-fields {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            margin: 0.5rem 0;
+        }
+
+        .mock-input {
+            width: 100%;
+            height: 24px;
+            background: rgba(255,255,255,0.02);
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            padding: 0 0.4rem;
+            font-size: 0.65rem;
+            color: var(--text-secondary);
+        }
+
+        /* Linked artifacts inside Column 3 */
+        .mock-linked-artifacts {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .mock-artifact-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.4rem;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            font-size: 0.65rem;
+        }
+
+        .mock-artifact-tag {
+            font-size: 0.55rem;
+            padding: 0.1rem 0.3rem;
+            border-radius: 3px;
+            background: rgba(16, 185, 129, 0.1);
+            color: var(--color-green);
+        }
+
+        /* --- SECTION 9: AI DOCUMENTATION ENGINE (DEEP DIVE) --- */
+        .sec-engine-deep {
+            padding: 140px 0;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .deep-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .deep-left {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .deep-label-title {
+            font-family: var(--font-heading);
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+
+        .deep-stat-card {
+            background: rgba(0, 80, 252, 0.03);
+            border: 1px solid var(--color-purple);
+            border-radius: 12px;
+            padding: 2rem;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 80, 252, 0.05);
+        }
+
+        .deep-stat-num {
+            font-family: var(--font-heading);
+            font-weight: 800;
+            font-size: 2.8rem;
+            color: var(--color-purple);
+            letter-spacing: -0.03em;
+            line-height: 1;
+            margin-bottom: 0.4rem;
+        }
+
+        .deep-stat-desc {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        .mock-brd-panel {
+            background: #09090b;
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 1.8rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1.2rem;
+            width: 100%;
+        }
+
+        .brd-header-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: 0.8rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .brd-title {
+            font-family: var(--font-heading);
+            font-size: 0.95rem;
+            font-weight: 700;
+        }
+
+        .brd-field {
+            display: flex;
+            flex-direction: column;
+            gap: 0.3rem;
+        }
+
+        .brd-field-label {
+            font-size: 0.65rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--text-secondary);
+        }
+
+        .brd-field-val {
+            font-size: 0.75rem;
+            background: rgba(255,255,255,0.02);
+            border: 1px solid var(--border-color);
+            padding: 0.5rem;
+            border-radius: 6px;
+            line-height: 1.4;
+        }
+
+        .brd-stats-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.8rem;
+        }
+
+        .brd-stat-chip {
+            padding: 0.6rem;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            font-size: 0.7rem;
+            text-align: center;
+        }
+
+        /* --- SECTIONS 10-14: BROWSER MOCKUPS FLOWS --- */
+        .sec-browser-flow {
+            padding: 140px 0;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .browser-grid {
+            display: grid;
+            grid-template-columns: 1.2fr 0.8fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        /* Browser Window Frame */
+        .browser-window {
+            width: 100%;
+            border-radius: 12px;
+            background: #0d0d0f;
+            border: 1.5px solid var(--border-color);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+            overflow: hidden;
+        }
+
+        .browser-header {
+            height: 38px;
+            background: #09090b;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            padding: 0 1rem;
+            gap: 1.5rem;
+        }
+
+        .browser-dots {
+            display: flex;
+            gap: 0.4rem;
+        }
+
+        .browser-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.15);
+        }
+        .browser-dot.red { background: var(--color-red); }
+
+        .browser-address-bar {
+            flex: 1;
+            height: 24px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            padding: 0 0.8rem;
+            font-size: 0.65rem;
+            color: var(--text-secondary);
+        }
+
+        .browser-content {
+            padding: 2.2rem;
+            min-height: 280px;
+            background: #030303;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            position: relative;
+        }
+
+        .flow-details-box {
+            display: flex;
+            flex-direction: column;
+            gap: 1.4rem;
+        }
+
+        .flow-detail-header {
+            font-family: var(--font-heading);
+            font-size: 1.4rem;
+            font-weight: 700;
+        }
+
+        .flow-detail-item {
+            display: flex;
+            flex-direction: column;
+            gap: 0.3rem;
+        }
+
+        .flow-item-label {
+            font-family: var(--font-heading);
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: var(--color-purple);
+        }
+
+        .flow-item-desc {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            line-height: 1.4;
+        }
+
+        .flow-checklist {
+            display: flex;
+            flex-direction: column;
+            gap: 0.6rem;
+            margin-top: 0.5rem;
+        }
+
+        .flow-check-item {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            font-size: 0.82rem;
+        }
+
+        .flow-check-icon {
+            color: var(--color-purple);
+            font-weight: bold;
+        }
+
+        /* --- SECTION 15: DESIGN SYSTEM --- */
+        .sec-ds {
+            padding: 140px 0;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .ds-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        /* Color Orbit Diagram */
+        .ds-orbit-container {
+            width: 300px;
+            height: 300px;
+            position: relative;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .orbit-ring {
+            position: absolute;
+            width: 220px;
+            height: 220px;
+            border-radius: 50%;
+            border: 2px dashed rgba(255, 255, 255, 0.05);
+        }
+
+        .orbit-center {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: #09090b;
+            border: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-family: var(--font-heading);
+            font-weight: 700;
+            font-size: 0.75rem;
+            z-index: 5;
+        }
+
+        .orbit-node {
+            position: absolute;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            border: 2px solid #000;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.4);
+            cursor: pointer;
+            transition: var(--transition-fast);
+        }
+
+        .orbit-node:hover {
+            transform: scale(1.1);
+        }
+
+        .node-1 { top: 0; left: 50%; transform: translate(-50%, -50%); background: #0050FC; border-color: #ffffff; box-shadow: 0 0 20px rgba(0, 80, 252, 0.4); } /* Blue highlight */
+        .node-2 { top: 50%; right: 0; transform: translate(50%, -50%); background: #021526; }
+        .node-3 { bottom: 0; left: 50%; transform: translate(-50%, 50%); background: #ffffff; }
+        .node-4 { top: 50%; left: 0; transform: translate(-50%, -50%); background: #e2e8f0; }
+
+        .ds-right {
+            display: flex;
+            flex-direction: column;
+            gap: 2.5rem;
+        }
+
+        .ds-type-specimen {
+            display: flex;
+            align-items: baseline;
+            gap: 1.5rem;
+        }
+
+        .ds-spec-huge {
+            font-size: 5rem;
+            font-weight: 700;
+            line-height: 1;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        .ds-spec-label {
+            font-family: 'Roboto', sans-serif;
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+        }
+
+        .ds-ruler {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .ruler-ticks {
+            display: flex;
+            justify-content: space-between;
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 0.4rem;
+        }
+
+        .ruler-tick {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            font-size: 0.65rem;
+            color: var(--text-secondary);
+            position: relative;
+        }
+
+        .ruler-tick::after {
+            content: '';
+            position: absolute;
+            bottom: -0.4rem;
+            width: 2px;
+            height: 8px;
+            background: var(--border-color);
+        }
+
+        /* --- SECTION 16: IMPACT --- */
+        .sec-impact {
+            padding: 140px 0;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .impact-track {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 1rem;
+            margin-top: 3rem;
+            margin-bottom: 4rem;
+            position: relative;
+        }
+
+        .impact-track::after {
+            content: '';
+            position: absolute;
+            top: 25px;
+            left: 0;
+            right: 0;
+            height: 1px;
+            border-top: 2px dashed var(--border-color);
+            z-index: 1;
+        }
+
+        .track-node {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            gap: 0.8rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .track-circle {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: #09090b;
+            border: 2px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            transition: var(--transition-smooth);
+        }
+
+        .track-node:hover .track-circle {
+            border-color: var(--color-purple);
+            color: var(--color-purple);
+            box-shadow: 0 0 15px rgba(0, 80, 252, 0.15);
+        }
+
+        .track-label {
+            font-family: var(--font-heading);
+            font-size: 0.72rem;
+            font-weight: 700;
+            color: var(--text-secondary);
+            max-width: 120px;
+            line-height: 1.3;
+        }
+
+        .impact-outcome-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.5rem;
+            margin-bottom: 4rem;
+        }
+
+        .outcome-card {
+            padding: 1.8rem;
+        }
+
+        .outcome-title {
+            font-family: var(--font-heading);
+            font-weight: 700;
+            font-size: 0.95rem;
+            color: var(--text-primary);
+            margin-bottom: 0.4rem;
+        }
+
+        .outcome-desc {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            line-height: 1.4;
+        }
+
+        .summary-comparison-table {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2.5rem;
+            border-top: 1px solid var(--border-color);
+            padding-top: 3rem;
+        }
+
+        .summary-col {
+            display: flex;
+            flex-direction: column;
+            gap: 1.2rem;
+        }
+
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: 0.8rem;
+            border-bottom: 1px dashed var(--border-color);
+        }
+
+        .summary-label {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        .summary-val {
+            font-family: var(--font-heading);
+            font-weight: 700;
+            font-size: 0.9rem;
+        }
+        .summary-col.after-col .summary-val { color: var(--color-green); }
+
+        /* --- NEW SECTIONS STYLING --- */
+        .sec-business, .sec-decisions {
+            padding: 140px 0;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .business-top-text {
+            font-size: 1.15rem;
+            color: var(--text-secondary);
+            line-height: 1.7;
+            margin-bottom: 3rem;
+            max-width: 900px;
+        }
+
+        .business-row-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.5rem;
+        }
+
+        .business-card {
+            padding: 1.5rem;
+            border-radius: 12px;
+            background: rgba(0, 80, 252, 0.02);
+            border: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+            gap: 0.6rem;
+            justify-content: flex-start;
+        }
+
+        .business-card-title {
+            font-family: var(--font-heading);
+            font-weight: 700;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--color-purple);
+            margin-bottom: 0.4rem;
+        }
+
+        .business-card-desc {
+            font-size: 0.88rem;
+            color: var(--text-primary);
+            line-height: 1.5;
+        }
+
+        .decisions-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 2.5rem;
+        }
+
+        .decisions-table th, .decisions-table td {
+            text-align: left;
+            padding: 1.5rem 1.2rem;
+            border-bottom: 1px solid var(--border-color);
+            font-size: 0.88rem;
+            vertical-align: top;
+        }
+
+        .decisions-table th {
+            font-family: var(--font-heading);
+            font-weight: 700;
+            color: var(--color-purple);
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            letter-spacing: 0.08em;
+        }
+
+        .decisions-table td {
+            color: var(--text-secondary);
+            line-height: 1.5;
+        }
+
+        .decisions-table td strong {
+            color: var(--text-primary);
+        }
+
+        /* --- SECTION 17: VALIDATION --- */
+        .sec-validation {
+            padding: 140px 0;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .val-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 2rem;
+        }
+
+        .val-table th, .val-table td {
+            text-align: left;
+            padding: 1.2rem;
+            border-bottom: 1px solid var(--border-color);
+            font-size: 0.82rem;
+        }
+
+        .val-table th {
+            font-family: var(--font-heading);
+            font-weight: 700;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            font-size: 0.72rem;
+            letter-spacing: 0.05em;
+        }
+
+        .val-table td {
+            color: var(--text-secondary);
+            line-height: 1.4;
+        }
+
+        .val-table td strong {
+            color: var(--text-primary);
+        }
+
+        .outcome-badge-tag {
+            font-size: 0.7rem;
+            font-weight: 700;
+            color: var(--color-purple);
+            font-style: italic;
+        }
+
+        /* --- SECTION 18: DESIGN SUMMARY --- */
+        .sec-summary {
+            padding: 140px 0;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .summary-stat-row {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 1.5rem;
+            padding: 1.5rem 0;
+            border-bottom: 1px solid var(--border-color);
+            margin-bottom: 3rem;
+        }
+
+        .summary-breakdown-3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2.5rem;
+        }
+
+        .breakdown-col {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .breakdown-title {
+            font-family: var(--font-heading);
+            font-weight: 700;
+            font-size: 1rem;
+            color: var(--text-primary);
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 0.5rem;
+        }
+
+        .breakdown-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        .breakdown-list li {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+
+        .breakdown-dot {
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            background: var(--color-purple);
+        }
+
+        .collab-row {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            font-size: 0.82rem;
+            color: var(--text-secondary);
+            margin-top: 0.5rem;
+            line-height: 1.4;
+        }
+
+        .collab-icons {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .collab-icon {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+            color: var(--text-primary);
+        }
+
+        /* --- SECTION 19: CLOSING --- */
+        .sec-closing {
+            padding: 140px 0 180px 0;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .closing-grid-4 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-gap: 2rem;
+            margin-top: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        .lesson-card {
+            padding: 2.2rem;
+        }
+
+        .lesson-num {
+            font-family: var(--font-heading);
+            font-weight: 800;
+            font-size: 1rem;
+            color: var(--color-purple);
+            margin-bottom: 0.6rem;
+        }
+
+        .lesson-title {
+            font-family: var(--font-heading);
+            font-weight: 700;
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .lesson-desc {
+            font-size: 0.82rem;
+            color: var(--text-secondary);
+            line-height: 1.5;
+        }
+
+        .reflection-panel {
+            padding: 3rem;
+            border-radius: 20px;
+            border: 1px solid var(--border-hover);
+            background: rgba(0, 80, 252, 0.005);
+            box-shadow: 0 0 35px rgba(0, 80, 252, 0.02);
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            gap: 1.2rem;
+        }
+
+        .reflection-quote {
+            font-family: var(--font-heading);
+            font-size: 1.8rem;
+            font-style: italic;
+            font-weight: 600;
+            color: var(--text-primary);
+            line-height: 1.3;
+        }
+
+        .reflection-caption {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.5;
+        }
+
+        /* Responsive Breakpoints */
+        @media (max-width: 991px) {
+            .cover-content, .why-comparison, .research-panel-row, .ia-flow-container, .features-grid-3, .deep-container, .browser-grid, .ds-grid, .impact-track, .impact-outcome-grid, .summary-comparison-table, .summary-breakdown-3, .closing-grid-4 {
+                grid-template-columns: 1fr !important;
+                flex-direction: column !important;
+                gap: 2.5rem !important;
+            }
+            .strategy-map {
+                display: flex;
+                flex-direction: column;
+                height: auto;
+                gap: 1.5rem;
+            }
+            .strategy-card {
+                position: static !important;
+                width: 100% !important;
+            }
+            .strategy-center {
+                margin: 2rem auto;
+            }
+            .cover-stat-bar, .research-stat-grid, .summary-stat-row {
+                grid-template-columns: 1fr 1fr !important;
+                gap: 1.5rem !important;
+            }
+            .ia-arrow-connector {
+                display: none;
+            }
+            .workflow-row {
+                grid-template-columns: 1fr !important;
+            }
+            .val-table {
+                display: block;
+                overflow-x: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Scroll Progress Bar -->
+    <div class="scroll-progress" id="scrollProgress"></div>
+
+    <!-- Navigation Header -->
+    <header class="case-nav">
+        <div class="container case-nav-container">
+            <a href="index.html" class="back-btn">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="19" y1="12" x2="5" y2="12"></line>
+                    <polyline points="12 19 5 12 12 5"></polyline>
+                </svg>
+                Back to Portfolio
+            </a>
+            <div class="case-nav-title">Simplify AI Case Study</div>
+        </div>
+    </header>
+
+    <!-- Background Glows -->
+    <div class="bg-glow" style="top: 10%; left: 5%;"></div>
+    <div class="bg-glow" style="top: 40%; right: 5%; background: radial-gradient(circle, rgba(2, 132, 199, 0.05) 0%, transparent 70%);"></div>
+    <div class="bg-glow" style="bottom: 10%; left: 10%;"></div>
+
+    <!-- --- SECTION 1: COVER --- -->
+    <section class="sec-cover reveal-section">
+        <div class="container cover-layout">
+            <div class="cover-content">
+                <div class="cover-left">
+                    <div class="hex-logo"></div>
+                </div>
+                
+                <div class="tilt-wrapper">
+                    <img src="media__1783062461804.png" alt="Simplify AI Specio Tablet Mockup" class="tablet-mockup-img">
+                </div>
+            </div>
+
+            <div class="cover-stat-bar">
+                <div class="stat-col">
+                    <span class="stat-label">Project Name</span>
+                    <span class="stat-val-pill">Simplify AI</span>
+                </div>
+                <div class="stat-col">
+                    <span class="stat-label">Role</span>
+                    <span class="stat-val-pill">Lead Product Designer</span>
+                </div>
+                <div class="stat-col">
+                    <span class="stat-label">Timeline</span>
+                    <span class="stat-val-pill">June – Dec 2025</span>
+                </div>
+                <div class="stat-col">
+                    <span class="stat-label">Domain</span>
+                    <span class="stat-val-pill">Enterprise SaaS</span>
+                </div>
+                <div class="stat-col">
+                    <span class="stat-label">Responsibility</span>
+                    <div class="stat-val-pills">
+                        <span class="stat-val-pill">Product Strategy</span>
+                        <span class="stat-val-pill">UX Design</span>
+                        <span class="stat-val-pill">IA</span>
+                        <span class="stat-val-pill">Design System</span>
+                        <span class="stat-val-pill">UI</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- --- SECTION 2: INTRO QUOTE --- -->
+    <section class="sec-intro container reveal-section">
+        <div class="intro-profile">
+            <div class="profile-img-circle">
+                <img src="profile.png" alt="Saransh Verma">
+            </div>
+            <div class="profile-info">
+                <span class="profile-name">Saransh Verma</span>
+                <span class="profile-title">Lead Product Designer</span>
+            </div>
+        </div>
+        
+        <h2 class="large-pull-quote">
+            "Every project begins with documentation. Simplify was built to make that process effortless."
+        </h2>
+
+        <div class="research-label-green">RESEARCH AT A GLANCE</div>
+        <div class="research-stat-grid">
+            <div class="research-stat-card glass-card">
+                <div class="research-icon">💬</div>
+                <div class="research-num">10</div>
+                <div class="research-desc">Interviews Conducted<br><span style="opacity: 0.6; font-size: 0.7rem;">BAs + Devs, 45 min each, over 3 weeks</span></div>
+            </div>
+            <div class="research-stat-card glass-card">
+                <div class="research-icon">📄</div>
+                <div class="research-num">18</div>
+                <div class="research-desc">Existing Docs Reviewed</div>
+            </div>
+            <div class="research-stat-card glass-card">
+                <div class="research-icon">🤝</div>
+                <div class="research-num">4</div>
+                <div class="research-desc">Workshops Hosted</div>
+            </div>
+            <div class="research-stat-card glass-card">
+                <div class="research-icon">⚠️</div>
+                <div class="research-num">25+</div>
+                <div class="research-desc">Pain Points Identified</div>
+            </div>
+            <div class="research-stat-card glass-card">
+                <div class="research-icon">👤</div>
+                <div class="research-num">6</div>
+                <div class="research-desc">User Roles Analyzed</div>
+            </div>
+            <div class="research-stat-card glass-card">
+                <div class="research-icon">🗺️</div>
+                <div class="research-num">12</div>
+                <div class="research-desc">Documentation Flows Mapped</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- --- SECTION 2.5 / SLIDE 3: BUSINESS CASE --- -->
+    <section class="sec-business container reveal-section">
+        <div class="section-label">● Business Context</div>
+        <h2 class="section-title">Why This Needed to Exist Now</h2>
+        <p class="section-subtitle">As the organization scaled, documentation became the delivery bottleneck — inconsistent across teams, slow to produce, and increasingly expensive to maintain.</p>
+
+        <div class="business-top-text">
+            <p>Requirement documentation had become a delivery bottleneck. Teams spent days producing BRDs, use cases, test cases, release notes, and UAT documents before development could even begin — and every team followed a slightly different structure.</p>
+        </div>
+
+        <div class="business-row-grid">
+            <div class="business-card">
+                <div class="business-card-title">Sponsor</div>
+                <div class="business-card-desc">Product Leadership & Delivery Management, as part of a broader AI enablement strategy</div>
+            </div>
+            <div class="business-card">
+                <div class="business-card-title">The Ask</div>
+                <div class="business-card-desc">"Can we reduce time spent on documentation without compromising quality and review standards?"</div>
+            </div>
+            <div class="business-card">
+                <div class="business-card-title">Constraints</div>
+                <div class="business-card-desc">Small cross-functional team · Tight delivery timeline · AI output must stay editable, never final</div>
+            </div>
+            <div class="business-card">
+                <div class="business-card-title">Cost of Inaction</div>
+                <div class="business-card-desc">Longer BA onboarding · Inconsistent specs to engineering · Delivery timelines continuing to slip as the org scaled</div>
+            </div>
+        </div>
+
+        <div class="insight-banner" style="margin-top: 3.5rem;">
+            <div class="insight-tag">KEY INSIGHT</div>
+            <div class="insight-quote">"If we did nothing, documentation effort would keep delaying delivery as the organization scaled — and review overhead would only grow."</div>
+        </div>
+    </section>
+
+    <!-- --- SECTION 3: WHY SIMPLIFY EXISTS --- -->
+    <section class="sec-why container reveal-section">
+        <div class="section-label">● Why Simplify Exists</div>
+        <h2 class="section-title">How Simplify Reduced Documentation Effort by 70%</h2>
+        <p class="section-subtitle">An internal AI-powered platform designed to automate documentation workflows, reduce manual effort, and accelerate product delivery across cross-functional teams.</p>
+
+        <div class="why-comparison">
+            <div class="why-panel before">
+                <div class="panel-header">BEFORE USING SIMPLIFY</div>
+                <ul class="before-list">
+                    <li><span>1</span> Requirements Definition</li>
+                    <li><span>2</span> Business Requirements (BRD)</li>
+                    <li><span>3</span> Functional Requirements (FRD)</li>
+                    <li><span>4</span> Epic & User Stories</li>
+                    <li><span>5</span> QA Test Cases & Scenarios</li>
+                    <li><span>6</span> UAT Scripts</li>
+                    <li><span>7</span> Release Notes</li>
+                </ul>
+                <div class="why-center-pill">10+ Hours — Documentation Creation Per Feature/Module</div>
+            </div>
+            
+            <div class="why-panel after">
+                <div class="panel-header">AFTER SIMPLIFY</div>
+                <div class="after-workflow">
+                    <div class="after-step">Step 01: <strong>Requirements</strong></div>
+                    <div class="after-arrow">↓</div>
+                    <div class="after-glow-card">
+                        <div class="after-glow-title">AI Documentation Workspace</div>
+                        <div class="after-glow-desc">Automatically generates BRDs, FRDs, Stories, Test Cases, and Release Notes from context parameters.</div>
+                    </div>
+                    <div class="after-arrow">↓</div>
+                    <div class="after-step">Step 02: <strong>Review & Edit</strong></div>
+                    <div class="after-arrow">↓</div>
+                    <div class="after-step">Step 03: <strong>Publish</strong></div>
+                </div>
+                <div class="after-stat">70% Less Efforts — AI-Assisted Documentation Workflow</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- --- SECTION 4: RESEARCH & DISCOVERY --- -->
+    <section class="sec-research container reveal-section">
+        <div class="section-label">● Research & Discovery</div>
+        <h2 class="section-title">Where Teams Were Losing Time</h2>
+        <p class="section-subtitle">Analyzing creation overhead, workflows, and consistency issues across business analysts, designer systems, developers, and QA engineers.</p>
+        
+        <div class="tag-pill-row">
+            <span class="tag-pill">Stakeholder Discussions</span>
+            <span class="tag-pill">Workflow Analysis</span>
+            <span class="tag-pill">Existing Documentation Review</span>
+            <span class="tag-pill">Cross-functional Team Feedback</span>
+        </div>
+
+        <div class="research-panel-row">
+            <div class="research-panel-card glass-card">
+                <h3 class="panel-icon-title">Time Intensive</h3>
+                <div class="panel-badges">
+                    <span class="panel-badge">3–5 Hrs BRD</span>
+                    <span class="panel-badge">2–3 Hrs Stories</span>
+                    <span class="panel-badge">4–6 Hrs QA</span>
+                </div>
+                <p class="panel-body-text">Writing detailed parameters and conditions manually consumed hours of productive engineering planning cycles.</p>
+            </div>
+            <div class="research-panel-card glass-card">
+                <h3 class="panel-icon-title">Repetitive Work</h3>
+                <div class="panel-badges">
+                    <span class="panel-badge">BRD Template</span>
+                    <span class="panel-badge">Cloned Flows</span>
+                </div>
+                <p class="panel-body-text">Re-specifying boilerplate context, authorization, headers, and formatting on every new module document created.</p>
+            </div>
+            <div class="research-panel-card glass-card">
+                <h3 class="panel-icon-title">Inconsistent Quality</h3>
+                <div class="panel-badges">
+                    <span class="panel-badge">Format Drift</span>
+                    <span class="panel-badge">No Standards</span>
+                </div>
+                <p class="panel-body-text">Documentation levels varied wildly depending on author experience, causing downstream communication breakdowns.</p>
+            </div>
+            <div class="research-panel-card glass-card">
+                <h3 class="panel-icon-title">Delivery Bottleneck</h3>
+                <div class="flow-chip-wrapper">
+                    <span>Idea</span> → <span>Specs</span> → <span>Dev</span>
+                </div>
+                <p class="panel-body-text">Teams waiting for specs to clear review cycles delayed developer onboarding, slowing the overall release pipeline.</p>
+            </div>
+        </div>
+
+        <div class="role-section">
+            <div class="role-title-row">MY ROLE</div>
+            <div class="role-grid">
+                <div class="role-item"><span class="role-item-name">Led Product Design</span></div>
+                <div class="role-item"><span class="role-item-name">Designed AI Workflows</span></div>
+                <div class="role-item"><span class="role-item-name">Created Design System</span></div>
+                <div class="role-item"><span class="role-item-name">Defined IA & UX Strategy</span></div>
+                <div class="role-item"><span class="role-item-name">Conducted Workshops</span></div>
+                <div class="role-item"><span class="role-item-name">Collaborated till Release</span></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- --- SECTION 5: STRATEGY --- -->
+    <section class="sec-strategy container reveal-section">
+        <div class="section-label">● Strategy</div>
+        <h2 class="section-title">Designing the Right Solution</h2>
+        <p class="section-subtitle">Balancing technical capability, workspace parameters, and user trust boundaries to design a high-craft utility.</p>
+
+        <div class="strategy-map">
+            <!-- Glowing connecting lines -->
+            <svg class="strategy-connectors" viewBox="0 0 1000 500" preserveAspectRatio="none">
+                <!-- Line to top-left (strat-1) -->
+                <line x1="500" y1="250" x2="240" y2="105" stroke="rgba(0, 80, 252, 0.25)" stroke-width="2" stroke-dasharray="6,4"></line>
+                <!-- Line to top-right (strat-2) -->
+                <line x1="500" y1="250" x2="760" y2="105" stroke="rgba(0, 80, 252, 0.25)" stroke-width="2" stroke-dasharray="6,4"></line>
+                <!-- Line to bottom-left (strat-3) -->
+                <line x1="500" y1="250" x2="240" y2="395" stroke="rgba(0, 80, 252, 0.25)" stroke-width="2" stroke-dasharray="6,4"></line>
+                <!-- Line to bottom-right (strat-4) -->
+                <line x1="500" y1="250" x2="760" y2="395" stroke="rgba(0, 80, 252, 0.25)" stroke-width="2" stroke-dasharray="6,4"></line>
+
+                <!-- Glowing dot nodes at connection ends -->
+                <circle cx="240" cy="105" r="4" fill="#0050FC"></circle>
+                <circle cx="760" cy="105" r="4" fill="#0050FC"></circle>
+                <circle cx="240" cy="395" r="4" fill="#0050FC"></circle>
+                <circle cx="760" cy="395" r="4" fill="#0050FC"></circle>
+            </svg>
+
+            <div class="strategy-center" style="flex-direction: column; gap: 0.3rem;">
+                <img src="media__1783084178112.png" alt="Simplify Logo" style="width: 48px; height: 48px; margin-bottom: 0.4rem;">
+                <div class="center-badge-title">SIMPLIFY</div>
+                <div class="center-badge-sub">AI Documentation Platform</div>
+            </div>
+            
+            <div class="strategy-card glass-card strat-1">
+                <h4 class="strat-card-title">Single Source of Truth</h4>
+                <p class="strat-card-desc">Establishing a centralized contextual repository to share parameters across all departments seamlessly.</p>
+            </div>
+            <div class="strategy-card glass-card strat-2">
+                <h4 class="strat-card-title">AI Assists, Humans Decide</h4>
+                <p class="strat-card-desc">Establishing strict workflow control checkpoints where AI generates initial drafts but humans validate edit approvals.</p>
+            </div>
+            <div class="strategy-card glass-card strat-3">
+                <h4 class="strat-card-title">Generate Once, Reuse</h4>
+                <p class="strat-card-desc">Context entered for a BRD is automatically parsed and repurposed to output User Stories and QA Scripts.</p>
+            </div>
+            <div class="strategy-card glass-card strat-4">
+                <h4 class="strat-card-title">Built for Cross-Teams</h4>
+                <p class="strat-card-desc">Unified collaborative interface built to bridge requirements directly between PMs, PMOs, Devs, and QA.</p>
+            </div>
+        </div>
+
+        <div class="insight-banner">
+            <div class="insight-tag">KEY INSIGHT</div>
+            <div class="insight-quote">"AI generates. Humans validate. Teams deliver."</div>
+        </div>
+    </section>
+
+    <!-- --- SECTION 6: INFORMATION ARCHITECTURE --- -->
+    <section class="sec-ia container reveal-section">
+        <div class="section-label">● Information Architecture</div>
+        <h2 class="section-title">Designing a Scalable Information Architecture</h2>
+        <p class="section-subtitle">Structuring the workflow elements and data layers to scale from single workspaces to multi-project environments.</p>
+
+        <div class="tag-pill-row">
+            <span class="tag-pill">Single Source of Truth</span>
+            <span class="tag-pill">Connected Documentation</span>
+            <span class="tag-pill">AI-first Generation</span>
+            <span class="tag-pill">Scalable Architecture</span>
+        </div>
+
+        <div class="ia-flow-container">
+            <div class="ia-card">
+                <div class="ia-card-header">Project Workspace</div>
+                <div class="ia-card-items">
+                    <span class="ia-item">Workspace Context</span>
+                    <span class="ia-item">Active Projects</span>
+                    <span class="ia-item">History Logs</span>
+                </div>
+            </div>
+            
+            <div class="ia-connector-line"></div>
+            
+            <div class="ia-branch-column">
+                <div class="ia-card">
+                    <div class="ia-card-header">Requirements</div>
+                </div>
+                <div class="ia-card">
+                    <div class="ia-card-header">Project Metadata</div>
+                </div>
+                <div class="ia-card">
+                    <div class="ia-card-header">Team & Roles</div>
+                </div>
+            </div>
+            
+            <div class="ia-connector-line"></div>
+            
+            <div class="ia-engine-circle">
+                <span class="ia-engine-title">SIMPLIFY</span>
+                <span class="ia-engine-title">AI Engine</span>
+                <div class="ia-legend-box">
+                    BRDs • FRDs • Epics • Stories • Test Cases • UAT • Release Notes
+                </div>
+            </div>
+            
+            <div class="ia-connector-line"></div>
+            
+            <div class="ia-card">
+                <div class="ia-card-header">Export & Publish</div>
+                <div class="ia-card-items">
+                    <span class="ia-item">Confluence Sync</span>
+                    <span class="ia-item">Jira Integration</span>
+                    <span class="ia-item">PDF / Markdown</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- --- SECTION 6.5 / SLIDE 8: DESIGN DECISIONS --- -->
+    <section class="sec-decisions container reveal-section">
+        <div class="section-label">● Design Decisions</div>
+        <h2 class="section-title">Where I Chose a Harder Path</h2>
+        <p class="section-subtitle">Three moments where the obvious solution wasn't the right one — and what changed my mind.</p>
+
+        <table class="decisions-table">
+            <thead>
+                <tr>
+                    <th style="width: 30%;">Option Considered</th>
+                    <th style="width: 35%;">Why I Rejected It</th>
+                    <th style="width: 35%;">What I Chose Instead</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>One-click, fully automated document generation</strong></td>
+                    <td>Business docs carry project-specific nuance AI can miss — auto-publishing risked pushing inaccurate requirements into development.</td>
+                    <td><strong>AI drafts first, humans review/edit/approve every section</strong> before publishing.</td>
+                </tr>
+                <tr>
+                    <td><strong>Separate tools per document type</strong> (BRD, Use Cases, Test Cases, etc.)</td>
+                    <td>Users re-entered the same project info repeatedly; context fragmented across tools; navigation broke down.</td>
+                    <td><strong>One centralized project workspace</strong> — single source of truth, reusable context.</td>
+                </tr>
+                <tr>
+                    <td><strong>Collect all project details upfront before AI starts</strong></td>
+                    <td>Long onboarding, higher abandonment — users often didn't know every detail on day one.</td>
+                    <td><strong>Capture essentials first, progressively enrich context</strong> as the project develops.</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="insight-banner" style="margin-top: 3.5rem;">
+            <div class="insight-tag">KEY INSIGHT</div>
+            <div class="insight-quote">"The fastest-looking option was rarely the one users could trust. Every 'no' here bought back user confidence."</div>
+        </div>
+    </section>
+
+    <!-- --- SECTION 7: USER EXPERIENCE / WORKFLOW --- -->
+    <section class="sec-workflow container reveal-section">
+        <div class="section-label">● User Experience</div>
+        <h2 class="section-title">Crafting the Documentation Workflow</h2>
+        <p class="section-subtitle">Mapping out the complete human-in-the-loop interaction timeline to establish seamless reviews and approvals.</p>
+
+        <div class="workflow-timeline">
+            <!-- Row 1 -->
+            <div class="workflow-row">
+                <div class="workflow-card glass-card">
+                    <span class="wf-num">01</span>
+                    <div class="workflow-badge-row">
+                        <span class="wf-badge ba">BA</span>
+                        <span class="wf-time">15 sec</span>
+                    </div>
+                    <h4 class="wf-card-title">Create Workspace</h4>
+                    <p class="wf-card-desc">Define name, team access parameters, and target integrations.</p>
+                </div>
+                <div class="workflow-card glass-card">
+                    <span class="wf-num">02</span>
+                    <div class="workflow-badge-row">
+                        <span class="wf-badge ba">BA</span>
+                        <span class="wf-time">15–20m</span>
+                    </div>
+                    <h4 class="wf-card-title">Gather Specs</h4>
+                    <p class="wf-card-desc">Paste raw notes, transcripts, or objectives into context inputs.</p>
+                </div>
+                <div class="workflow-card glass-card">
+                    <span class="wf-num">03</span>
+                    <div class="workflow-badge-row">
+                        <span class="wf-badge ba">BA</span>
+                        <span class="wf-time">5–10m</span>
+                    </div>
+                    <h4 class="wf-card-title">Project Setup</h4>
+                    <p class="wf-card-desc">Define guidelines, compliance constraints, and structures.</p>
+                </div>
+                <div class="workflow-card glass-card highlight">
+                    <span class="wf-num">04</span>
+                    <div class="workflow-badge-row">
+                        <span class="wf-badge ai">AI</span>
+                        <span class="wf-time">Instant</span>
+                    </div>
+                    <h4 class="wf-card-title">Generation</h4>
+                    <p class="wf-card-desc">Specio AI parses parameters and drafts connected documentation.</p>
+                </div>
+                <div class="workflow-card glass-card">
+                    <span class="wf-num">05</span>
+                    <div class="workflow-badge-row">
+                        <span class="wf-badge ba">BA</span>
+                        <span class="wf-time">5–10m</span>
+                    </div>
+                    <h4 class="wf-card-title">Review & Edit</h4>
+                    <p class="wf-card-desc">Refine prompts, override parameters, and make inline edits.</p>
+                </div>
+            </div>
+
+            <div class="workflow-divider-pill">AI Generated Output</div>
+
+            <!-- Row 2 -->
+            <div class="workflow-row">
+                <div class="workflow-card glass-card">
+                    <span class="wf-num">06</span>
+                    <div class="workflow-badge-row">
+                        <span class="wf-badge ai">AI</span>
+                        <span class="wf-time">Instant</span>
+                    </div>
+                    <h4 class="wf-card-title">Epic & Stories</h4>
+                    <p class="wf-card-desc">Outputs sprint-ready requirements formatted for Jira.</p>
+                </div>
+                <div class="workflow-card glass-card">
+                    <span class="wf-num">07</span>
+                    <div class="workflow-badge-row">
+                        <span class="wf-badge ai">AI</span>
+                        <span class="wf-time">Instant</span>
+                    </div>
+                    <h4 class="wf-card-title">Test Cases</h4>
+                    <p class="wf-card-desc">Generates step-by-step logic scripts for QA scenarios.</p>
+                </div>
+                <div class="workflow-card glass-card">
+                    <span class="wf-num">08</span>
+                    <div class="workflow-badge-row">
+                        <span class="wf-badge ai">AI</span>
+                        <span class="wf-time">Instant</span>
+                    </div>
+                    <h4 class="wf-card-title">UAT Scripts</h4>
+                    <p class="wf-card-desc">Creates functional validation scripts for user acceptance.</p>
+                </div>
+                <div class="workflow-card glass-card">
+                    <span class="wf-num">09</span>
+                    <div class="workflow-badge-row">
+                        <span class="wf-badge ai">AI</span>
+                        <span class="wf-time">Instant</span>
+                    </div>
+                    <h4 class="wf-card-title">Release Notes</h4>
+                    <p class="wf-card-desc">Formats client-ready summaries of modifications.</p>
+                </div>
+                <div class="workflow-card glass-card">
+                    <span class="wf-num">10</span>
+                    <div class="workflow-badge-row">
+                        <span class="wf-badge ba">BA</span>
+                        <span class="wf-time">5–10m</span>
+                    </div>
+                    <h4 class="wf-card-title">Export & Sync</h4>
+                    <p class="wf-card-desc">Directly push and populate Confluence, Jira, or target formats.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- --- SECTION 8: CORE FEATURES --- -->
+    <section class="sec-features container reveal-section">
+        <div class="section-label">● Core Features</div>
+        <h2 class="section-title">Designing the Core Experience</h2>
+        <p class="section-subtitle">Bridging complex data requirements and simple interfaces to establish complete traceability across artifacts.</p>
+
+        <div class="features-grid-3">
+            <!-- Column 1 -->
+            <div class="feature-column">
+                <div class="feature-header-pill">AI Documentation Engine</div>
+                <div class="feature-mock-panel">
+                    <div class="mock-chat-header">🤖 Specio Chat Panel</div>
+                    <div class="mock-chat-bubble">Drafting Payment Gateway BRD based on constraints.</div>
+                    <div class="mock-chat-input-area">
+                        <span class="mock-textarea">Add transaction limit rules...</span>
+                        <div class="mock-btn-row">
+                            <span class="mock-sm-btn secondary">Discard</span>
+                            <span class="mock-sm-btn primary">Refine</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="tag-pill-row">
+                    <span class="tag-pill">AI-first Experience</span>
+                    <span class="tag-pill">Guided Prompts</span>
+                    <span class="tag-pill">Human in Loop</span>
+                </div>
+            </div>
+
+            <!-- Column 2 -->
+            <div class="feature-column">
+                <div class="feature-header-pill">Project Workspace</div>
+                <div class="feature-mock-panel">
+                    <div class="mock-form-step"><span>Create New Workspace</span><span>Step 2/3</span></div>
+                    <div class="mock-form-fields">
+                        <span class="stat-label">Project Description</span>
+                        <div class="mock-input">B2B SaaS transaction gateway...</div>
+                        <span class="stat-label">Target Compliance</span>
+                        <div class="mock-input">PCI-DSS, GDPR Compliance</div>
+                    </div>
+                </div>
+                <div class="tag-pill-row">
+                    <span class="tag-pill">Context Preservation</span>
+                    <span class="tag-pill">Onboarding Flows</span>
+                    <span class="tag-pill">Single Truth</span>
+                </div>
+            </div>
+
+            <!-- Column 3 -->
+            <div class="feature-column">
+                <div class="feature-header-pill">Connected Documentation</div>
+                <div class="feature-mock-panel">
+                    <div class="mock-linked-artifacts">
+                        <div class="mock-artifact-row">
+                            <span>BRD_Payment_Gateway</span>
+                            <span class="mock-artifact-tag">Synced</span>
+                        </div>
+                        <div class="mock-artifact-row">
+                            <span>Epic_User_Stories</span>
+                            <span class="mock-artifact-tag">Jira</span>
+                        </div>
+                        <div class="mock-artifact-row">
+                            <span>QA_Test_Scenarios</span>
+                            <span class="mock-artifact-tag">Approved</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="tag-pill-row">
+                    <span class="tag-pill">Traceability</span>
+                    <span class="tag-pill">Smart Relations</span>
+                    <span class="tag-pill">Confluence Sync</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- --- SECTION 9: AI DOCUMENTATION ENGINE (DEEP DIVE) --- -->
+    <section class="sec-engine-deep container reveal-section">
+        <div class="section-label">● Engine</div>
+        <h2 class="section-title">Designing the AI Documentation Engine</h2>
+        <p class="section-subtitle">Focusing heavily on validating accuracy and maintaining complete control configurations for product managers.</p>
+
+        <div class="deep-container">
+            <div class="deep-left">
+                <h3 class="deep-label-title">The Challenge</h3>
+                <p class="flow-item-desc">PMs and BAs were constantly duplicating inputs, explaining the same system context (auth, database, user roles) across seven separate requirement and quality documents.</p>
+                
+                <div class="deep-stat-card">
+                    <div class="deep-stat-num">70%</div>
+                    <div class="deep-stat-desc">Less Manual Documentation Overhead</div>
+                </div>
+            </div>
+
+            <div class="mock-brd-panel">
+                <div class="brd-header-row">
+                    <span class="brd-title">Specio Engine Draft</span>
+                    <span class="mock-artifact-tag">v1.2.0</span>
+                </div>
+                
+                <div class="brd-field">
+                    <span class="brd-field-label">Objectives</span>
+                    <div class="brd-field-val">Design a highly available transaction settlement workflow.</div>
+                </div>
+                
+                <div class="brd-field">
+                    <span class="brd-field-label">Design Constraints</span>
+                    <div class="brd-field-val">Requires OAuth2 token verification on all microservices.</div>
+                </div>
+
+                <div class="brd-stats-row">
+                    <div class="brd-stat-chip">&lt;30s Generation</div>
+                    <div class="brd-stat-chip">100% Control</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- --- SECTION 10: SPECIO AI CHATBOT --- -->
+    <section class="sec-browser-flow container reveal-section">
+        <div class="section-label">● Specio – AI Chatbot</div>
+        <h2 class="section-title">Designing the Core Product Experience</h2>
+        
+        <div class="browser-grid">
+            <div class="browser-window">
+                <div class="browser-header">
+                    <div class="browser-dots">
+                        <div class="browser-dot red"></div>
+                        <div class="browser-dot"></div>
+                        <div class="browser-dot"></div>
+                    </div>
+                    <div class="browser-address-bar">simplify.ai/workspace/ai-chatbot</div>
+                </div>
+                <div class="browser-content">
+                    <div class="mock-chat-header">🤖 Specio Assistant</div>
+                    <div class="mock-chat-bubble" style="margin: 1rem 0;">I have loaded the transaction workspace. What document would you like me to compile?</div>
+                    <div class="mock-chat-input-area" style="width: 100%;">
+                        <span class="mock-textarea">Compose the payment gateway integration BRD containing active retry rules.</span>
+                        <div class="mock-btn-row">
+                            <span class="mock-sm-btn primary">Generate Draft</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="flow-details-box">
+                <h3 class="flow-detail-header">AI Documentation Assistant</h3>
+                <div class="flow-detail-item">
+                    <span class="flow-item-label">Design Goal</span>
+                    <p class="flow-item-desc">Business teams spent more time documenting ideas than delivering products.</p>
+                </div>
+                <div class="flow-detail-item">
+                    <span class="flow-item-label">UX Decision</span>
+                    <p class="flow-item-desc">Designed a conversational AI assistant that transforms business requirements into structured documentation while keeping users fully in control.</p>
+                </div>
+                <div class="flow-checklist">
+                    <div class="flow-check-item"><span class="flow-check-icon">✓</span> Natural language interaction</div>
+                    <div class="flow-check-item"><span class="flow-check-icon">✓</span> Human-in-the-loop review</div>
+                    <div class="flow-check-item"><span class="flow-check-icon">✓</span> Faster documentation</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- --- SECTION 11: CREATE PROJECT --- -->
+    <section class="sec-browser-flow container reveal-section">
+        <div class="section-label">● Create Project</div>
+        <h2 class="section-title">Creating Project Context</h2>
+        
+        <div class="browser-grid">
+            <div class="browser-window">
+                <div class="browser-header">
+                    <div class="browser-dots">
+                        <div class="browser-dot red"></div>
+                        <div class="browser-dot"></div>
+                        <div class="browser-dot"></div>
+                    </div>
+                    <div class="browser-address-bar">simplify.ai/workspace/create-project</div>
+                </div>
+                <div class="browser-content">
+                    <div class="mock-form-step"><span>Onboard New Project Space</span><span>Step 1/3</span></div>
+                    <div class="mock-form-fields" style="width: 100%; margin-top: 1.5rem;">
+                        <span class="stat-label">Workspace Name</span>
+                        <div class="mock-input" style="height: 30px; line-height: 30px;">Simplify AI Platform</div>
+                        <span class="stat-label">Primary Scope Description</span>
+                        <div class="mock-input" style="height: 50px; padding: 0.4rem;">Platform configured to manage contextual requirements across B2B systems.</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="flow-details-box">
+                <h3 class="flow-detail-header">Project Onboarding Flow</h3>
+                <div class="flow-detail-item">
+                    <span class="flow-item-label">Design Goal</span>
+                    <p class="flow-item-desc">Project information was scattered across emails, spreadsheets, and documents, forcing repeated re-entry of the same context.</p>
+                </div>
+                <div class="flow-detail-item">
+                    <span class="flow-item-label">UX Decision</span>
+                    <p class="flow-item-desc">Introduced a structured onboarding flow that establishes project context once so every AI-generated artifact stays accurate, connected, and consistent.</p>
+                </div>
+                <div class="flow-checklist">
+                    <div class="flow-check-item"><span class="flow-check-icon">✓</span> Consistent project foundation</div>
+                    <div class="flow-check-item"><span class="flow-check-icon">✓</span> Reduced duplicate effort</div>
+                    <div class="flow-check-item"><span class="flow-check-icon">✓</span> Improved documentation quality</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- --- SECTION 12: GENERATE DOCUMENT (BRD) --- -->
+    <section class="sec-browser-flow container reveal-section">
+        <div class="section-label">● Generate Document</div>
+        <h2 class="section-title">Generating Business Documents</h2>
+        
+        <div class="browser-grid">
+            <div class="browser-window">
+                <div class="browser-header">
+                    <div class="browser-dots">
+                        <div class="browser-dot red"></div>
+                        <div class="browser-dot"></div>
+                        <div class="browser-dot"></div>
+                    </div>
+                    <div class="browser-address-bar">simplify.ai/workspace/create-brd</div>
+                </div>
+                <div class="browser-content">
+                    <div class="mock-linked-artifacts" style="width: 100%;">
+                        <div class="mock-artifact-row" style="padding: 0.8rem;">
+                            <span>Compiled_BRD_V1.pdf</span>
+                            <span class="mock-artifact-tag" style="background: rgba(0, 80, 252, 0.1); color: var(--color-purple);">Ready</span>
+                        </div>
+                        <div class="mock-btn-row" style="margin-top: 1rem;">
+                            <span class="mock-sm-btn secondary">Edit Parameters</span>
+                            <span class="mock-sm-btn primary">Export to PDF</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="flow-details-box">
+                <h3 class="flow-detail-header">Document Creation Experience</h3>
+                <div class="flow-detail-item">
+                    <span class="flow-item-label">Design Goal</span>
+                    <p class="flow-item-desc">Creating every new document required re-entering project details before documentation could even begin.</p>
+                </div>
+                <div class="flow-detail-item">
+                    <span class="flow-item-label">UX Decision</span>
+                    <p class="flow-item-desc">Designed an AI-assisted creation flow that pre-populates project context, guides essential inputs, and generates business-ready documentation.</p>
+                </div>
+                <div class="flow-checklist">
+                    <div class="flow-check-item"><span class="flow-check-icon">✓</span> Faster document creation</div>
+                    <div class="flow-check-item"><span class="flow-check-icon">✓</span> Consistent document structure</div>
+                    <div class="flow-check-item"><span class="flow-check-icon">✓</span> Lower cognitive load</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- --- SECTION 13: GENERATE USER STORIES --- -->
+    <section class="sec-browser-flow container reveal-section">
+        <div class="section-label">● Generate User Stories</div>
+        <h2 class="section-title">From BRDs to Sprint-ready Stories</h2>
+        
+        <div class="browser-grid">
+            <div class="browser-window">
+                <div class="browser-header">
+                    <div class="browser-dots">
+                        <div class="browser-dot red"></div>
+                        <div class="browser-dot"></div>
+                        <div class="browser-dot"></div>
+                    </div>
+                    <div class="browser-address-bar">simplify.ai/workspace/epic-user-stories</div>
+                </div>
+                <div class="browser-content" style="flex-direction: row; gap: 1rem; align-items: stretch; padding: 1rem;">
+                    <div style="width: 30%; border-right: 1px solid var(--border-color); font-size: 0.65rem; display: flex; flex-direction: column; gap: 0.5rem; text-align: left;">
+                        <span style="font-weight: 700;">Existing Epics</span>
+                        <span style="color: var(--text-secondary);">Epic 01: Auth</span>
+                        <span style="color: var(--text-secondary);">Epic 02: Ledger</span>
+                    </div>
+                    <div style="flex: 1; display: flex; flex-direction: column; gap: 0.5rem; font-size: 0.65rem; text-align: left;">
+                        <span style="font-weight: 700;">Generated User Stories</span>
+                        <div style="background: rgba(255,255,255,0.02); border: 1px solid var(--border-color); padding: 0.4rem; border-radius: 4px; display: flex; justify-content: space-between;">
+                            <span>As a user, I want to sign in via OAuth...</span>
+                            <span style="color: var(--color-green);">Approved</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="flow-details-box">
+                <h3 class="flow-detail-header">Requirement-to-Story Conversion</h3>
+                <div class="flow-detail-item">
+                    <span class="flow-item-label">Design Goal</span>
+                    <p class="flow-item-desc">Translating business requirements into implementation-ready user stories required significant manual effort and domain expertise.</p>
+                </div>
+                <div class="flow-detail-item">
+                    <span class="flow-item-label">UX Decision</span>
+                    <p class="flow-item-desc">Enabled teams to reuse approved BRDs as the foundation for AI-generated Epics and User Stories.</p>
+                </div>
+                <div class="flow-checklist">
+                    <div class="flow-check-item"><span class="flow-check-icon">✓</span> Reduced planning effort</div>
+                    <div class="flow-check-item"><span class="flow-check-icon">✓</span> Better requirement consistency</div>
+                    <div class="flow-check-item"><span class="flow-check-icon">✓</span> Faster engineering handoff</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- --- SECTION 14: ACCESS CONTROL --- -->
+    <section class="sec-browser-flow container reveal-section">
+        <div class="section-label">● Access Control</div>
+        <h2 class="section-title">Managing Enterprise Permissions</h2>
+        
+        <div class="browser-grid">
+            <div class="browser-window">
+                <div class="browser-header">
+                    <div class="browser-dots">
+                        <div class="browser-dot red"></div>
+                        <div class="browser-dot"></div>
+                        <div class="browser-dot"></div>
+                    </div>
+                    <div class="browser-address-bar">simplify.ai/workspace/access-control</div>
+                </div>
+                <div class="browser-content" style="padding: 1rem;">
+                    <table style="width: 100%; border-collapse: collapse; font-size: 0.65rem; text-align: left;">
+                        <thead>
+                            <tr style="border-bottom: 1px solid var(--border-color); color: var(--text-secondary);">
+                                <th>Role</th>
+                                <th>Documents Access</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr style="border-bottom: 1px solid var(--border-color);">
+                                <td>Product Lead</td>
+                                <td>All Workspaces</td>
+                                <td>Edit & Approve</td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid var(--border-color);">
+                                <td>Developer</td>
+                                <td>Jira Stories & BRDs</td>
+                                <td>Read Only</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+            <div class="flow-details-box">
+                <h3 class="flow-detail-header">Role-Based Access</h3>
+                <div class="flow-detail-item">
+                    <span class="flow-item-label">Design Goal</span>
+                    <p class="flow-item-desc">Without structured permissions, project ownership was unclear, increasing risk of unauthorized changes.</p>
+                </div>
+                <div class="flow-detail-item">
+                    <span class="flow-item-label">UX Decision</span>
+                    <p class="flow-item-desc">Introduced a Role-Based Access Control (RBAC) system letting admins manage users, assign projects, and define access from one interface.</p>
+                </div>
+                <div class="flow-checklist">
+                    <div class="flow-check-item"><span class="flow-check-icon">✓</span> Secure documentation workflow</div>
+                    <div class="flow-check-item"><span class="flow-check-icon">✓</span> Controlled project access</div>
+                    <div class="flow-check-item"><span class="flow-check-icon">✓</span> Better team accountability</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- --- SECTION 15: DESIGN SYSTEM --- -->
+    <section class="sec-ds container reveal-section">
+        <div class="section-label">● Design System</div>
+        <h2 class="section-title">Building a Scalable Enterprise Design System</h2>
+        <p class="section-subtitle">Establishing consistency and accessibility rules to handle complex interface density across SaaS platforms.</p>
+
+        <div class="ds-grid">
+            <div class="ds-orbit-container">
+                <div class="orbit-ring"></div>
+                <div class="orbit-center">
+                    <span>COLOR</span>
+                    <span style="color: var(--text-secondary); font-size: 0.65rem;">TOKENS</span>
+                </div>
+                <div class="orbit-node node-1"></div>
+                <div class="orbit-node node-2"></div>
+                <div class="orbit-node node-3"></div>
+                <div class="orbit-node node-4"></div>
+            </div>
+            
+            <div class="ds-right">
+                <div class="ds-type-specimen">
+                    <span class="ds-spec-huge">Aa</span>
+                    <span class="ds-spec-label">Roboto / Interface Typography</span>
+                </div>
+                
+                <div class="ds-ruler">
+                    <span class="stat-label">Spacing & Sizing Scale</span>
+                    <div class="ruler-ticks">
+                        <div class="ruler-tick">12</div>
+                        <div class="ruler-tick">16</div>
+                        <div class="ruler-tick">24</div>
+                        <div class="ruler-tick">32</div>
+                        <div class="ruler-tick">48</div>
+                        <div class="ruler-tick">64</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- --- SECTION 16: IMPACT --- -->
+    <section class="sec-impact container reveal-section">
+        <div class="section-label">● Impact</div>
+        <h2 class="section-title">Transforming Documentation Into a Connected Workflow</h2>
+        <p class="section-subtitle">Measuring efficiency shifts from raw discovery phases up to active sprint-ready engineering releases.</p>
+
+        <div class="impact-track">
+            <div class="track-node">
+                <div class="track-circle">01</div>
+                <span class="track-label">Capture Specs</span>
+            </div>
+            <div class="track-node">
+                <div class="track-circle">02</div>
+                <span class="track-label">Centralize Context</span>
+            </div>
+            <div class="track-node">
+                <div class="track-circle">03</div>
+                <span class="track-label">Generate Drafts</span>
+            </div>
+            <div class="track-node">
+                <div class="track-circle">04</div>
+                <span class="track-label">Link Artifacts</span>
+            </div>
+            <div class="track-node">
+                <div class="track-circle">05</div>
+                <span class="track-label">Approve Draft</span>
+            </div>
+            <div class="track-node">
+                <div class="track-circle">06</div>
+                <span class="track-label">Release & Export</span>
+            </div>
+        </div>
+
+        <div class="impact-outcome-grid">
+            <div class="outcome-card glass-card">
+                <h4 class="outcome-title">Faster Delivery</h4>
+                <p class="outcome-desc">Reduced sprint planning times by bypassing repetitive baseline draft creation phases completely.</p>
+            </div>
+            <div class="outcome-card glass-card">
+                <h4 class="outcome-title">Consistent Quality</h4>
+                <p class="outcome-desc">Enforced compliant, high-quality structures automatically using established layout frameworks.</p>
+            </div>
+            <div class="outcome-card glass-card">
+                <h4 class="outcome-title">Better Collaboration</h4>
+                <p class="outcome-desc">Linked business analysts, developers, and QA engineers onto a single platform workspace.</p>
+            </div>
+            <div class="outcome-card glass-card">
+                <h4 class="outcome-title">Lower Cognitive Load</h4>
+                <p class="outcome-desc">Establish configurations once to keep context aligned across all system requirements automatically.</p>
+            </div>
+        </div>
+
+        <div class="summary-comparison-table">
+            <div class="summary-col">
+                <span class="panel-header" style="color: var(--color-red);">BEFORE SIMPLIFY</span>
+                <div class="summary-row">
+                    <span class="summary-label">Project Context</span>
+                    <span class="summary-val">Users remembered context</span>
+                </div>
+                <div class="summary-row">
+                    <span class="summary-label">Requirements Flow</span>
+                    <span class="summary-val">Multiple repetitive forms</span>
+                </div>
+                <div class="summary-row">
+                    <span class="summary-label">Creation Process</span>
+                    <span class="summary-val">High cognitive effort</span>
+                </div>
+            </div>
+            
+            <div class="summary-col after-col">
+                <span class="panel-header" style="color: var(--color-green);">AFTER SIMPLIFY</span>
+                <div class="summary-row">
+                    <span class="summary-label">Project Context</span>
+                    <span class="summary-val">System remembers context</span>
+                </div>
+                <div class="summary-row">
+                    <span class="summary-label">Requirements Flow</span>
+                    <span class="summary-val">One guided workflow</span>
+                </div>
+                <div class="summary-row">
+                    <span class="summary-label">Creation Process</span>
+                    <span class="summary-val">Guided AI assistance</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- --- SECTION 17: VALIDATION --- -->
+    <section class="sec-validation container reveal-section">
+        <div class="section-label">● Validation</div>
+        <h2 class="section-title">Validating the Experience</h2>
+        <p class="section-subtitle">Iterating interface details based on usability feedback from internal product departments.</p>
+
+        <table class="val-table">
+            <thead>
+                <tr>
+                    <th>Finding</th>
+                    <th>Design Improvement</th>
+                    <th>Outcome</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Generation lacked clear system feedback</td>
+                    <td>Added progress states and completion feedback</td>
+                    <td><span class="outcome-badge-tag">Higher confidence</span></td>
+                </tr>
+                <tr>
+                    <td>Repeatedly entering project info slowed documentation</td>
+                    <td>Pre-filled project context from the centralized workspace</td>
+                    <td><span class="outcome-badge-tag">Less repetitive work</span></td>
+                </tr>
+                <tr>
+                    <td>AI required stronger user oversight</td>
+                    <td>Introduced Review → Edit → Approve before publishing</td>
+                    <td><span class="outcome-badge-tag">Greater trust</span></td>
+                </tr>
+                <tr>
+                    <td>Related artifacts were difficult to discover</td>
+                    <td>Connected every document inside a single project workspace</td>
+                    <td><span class="outcome-badge-tag">Faster navigation</span></td>
+                </tr>
+                <tr>
+                    <td>Documentation handoffs interrupted development</td>
+                    <td>Linked BRDs, Stories, and Test Cases into one connected flow</td>
+                    <td><span class="outcome-badge-tag">Stronger collaboration</span></td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+
+    <!-- --- SECTION 18: DESIGN SUMMARY --- -->
+    <section class="sec-summary container reveal-section">
+        <div class="section-label">● Design Summary</div>
+        <h2 class="section-title">Leading the Product Design</h2>
+        
+        <div class="summary-stat-row">
+            <div class="stat-col">
+                <span class="stat-label">Role</span>
+                <span class="stat-val">Lead Product Designer</span>
+            </div>
+            <div class="stat-col">
+                <span class="stat-label">Duration</span>
+                <span class="stat-val">4 Months</span>
+            </div>
+            <div class="stat-col">
+                <span class="stat-label">Platform</span>
+                <span class="stat-val">Enterprise AI SaaS</span>
+            </div>
+            <div class="stat-col">
+                <span class="stat-label">Target Audience</span>
+                <span class="stat-val">PMs, BAs, Devs, QA</span>
+            </div>
+            <div class="stat-col">
+                <span class="stat-label">Release Stage</span>
+                <span class="stat-val">Internal Beta v1.1</span>
+            </div>
+        </div>
+
+        <div class="summary-breakdown-3">
+            <div class="breakdown-col">
+                <h4 class="breakdown-title">End-to-End Process</h4>
+                <ul class="breakdown-list">
+                    <li><span class="breakdown-dot"></span> Discovery, Strategy & UX Research</li>
+                    <li><span class="breakdown-dot"></span> User Flows & Problem Framing</li>
+                    <li><span class="breakdown-dot"></span> Wireframing & Interactive Prototyping</li>
+                    <li><span class="breakdown-dot"></span> Visual Design & Design Systems</li>
+                    <li><span class="breakdown-dot"></span> Handoff & engineering reviews</li>
+                </ul>
+            </div>
+            <div class="breakdown-col">
+                <h4 class="breakdown-title">Core Contributions</h4>
+                <ul class="breakdown-list">
+                    <li><span class="breakdown-dot"></span> Product Strategy definition</li>
+                    <li><span class="breakdown-dot"></span> UX Architecture & Site Mappings</li>
+                    <li><span class="breakdown-dot"></span> Form Design & Flow Optimizations</li>
+                    <li><span class="breakdown-dot"></span> Conversational UX Prompt guidelines</li>
+                    <li><span class="breakdown-dot"></span> System Usability verification</li>
+                </ul>
+            </div>
+            <div class="breakdown-col">
+                <h4 class="breakdown-title">Cross-functional Collaboration</h4>
+                <div class="collab-row">
+                    <div class="collab-icons">
+                        <span class="collab-icon">B</span>
+                        <span class="collab-icon">D</span>
+                        <span class="collab-icon">E</span>
+                    </div>
+                    <span>Facilitated alignment between business analysts, design system engineers, and developers from initial discovery through release.</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- --- SECTION 19: CLOSING --- -->
+    <section class="sec-closing container reveal-section">
+        <div class="section-label">● Thankyou</div>
+        <h2 class="section-title">What This Project Taught Me</h2>
+        <p class="section-subtitle">Reflecting on B2B SaaS workflows, design systems, and the implementation of user-controlled artificial intelligence.</p>
+
+        <div class="closing-grid-4">
+            <div class="lesson-card glass-card">
+                <span class="lesson-num">01</span>
+                <h4 class="lesson-title">Design Systems Scale</h4>
+                <p class="lesson-desc">Establishing robust tokens and layout principles early on enabled the AI generator to output highly consistent documentation layouts effortlessly.</p>
+            </div>
+            <div class="lesson-card glass-card">
+                <span class="lesson-num">02</span>
+                <h4 class="lesson-title">AI Needs Human Trust</h4>
+                <p class="lesson-desc">Users adopted Specio AI far faster when they retained complete control to review, edit, discard, or approve every generation stage.</p>
+            </div>
+            <div class="lesson-card glass-card">
+                <span class="lesson-num">03</span>
+                <h4 class="lesson-title">Think Beyond Screens</h4>
+                <p class="lesson-desc">The most impactful UX optimizations came from redesigning the end-to-end documentation lifecycle rather than refining isolated page mockups.</p>
+            </div>
+            <div class="lesson-card glass-card">
+                <span class="lesson-num">04</span>
+                <h4 class="lesson-title">Business Context Matters</h4>
+                <p class="lesson-desc">Deeply mapping the collaboration thresholds between BAs, QA, and devs was essential to frame a platform that all roles could comfortably share.</p>
+            </div>
+        </div>
+
+        <div class="reflection-panel">
+            <div class="reflection-quote">"The most valuable design decision wasn't adding AI — it was designing a workflow people could trust."</div>
+            <p class="reflection-caption">This project strengthened my approach to designing AI-powered enterprise products by combining product strategy, systems thinking, and human-centered design into one cohesive experience.</p>
+        </div>
+    </section>
+
+    <!-- Scroll & Entrance Animations Trigger -->
+    <script>
+        // Scroll Progress indicator
+        window.addEventListener('scroll', () => {
+            const winScroll = document.documentElement.scrollTop;
+            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrolled = (winScroll / height) * 100;
+            document.getElementById('scrollProgress').style.width = scrolled + '%';
+        });
+
+        // IntersectionObserver for staggered scroll reveals
+        const revealSections = document.querySelectorAll('.reveal-section');
+        const observerOptions = {
+            threshold: 0.15,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const revealObserver = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                    revealObserver.unobserve(entry.target); // Trigger only once
+                }
+            });
+        }, observerOptions);
+
+        revealSections.forEach(section => {
+            revealObserver.observe(section);
+        });
+
+    </script>
+</body>
+</html>
