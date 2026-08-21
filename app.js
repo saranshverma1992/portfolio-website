@@ -6,12 +6,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const themeToggleBtn = document.getElementById('themeToggle');
     const mobileThemeToggleBtn = document.getElementById('mobileThemeToggle');
     
-    // Check saved theme or default to dark
-    const savedTheme = localStorage.getItem('theme') || 'dark';
+    // Check saved theme or default to light
+    const savedTheme = localStorage.getItem('theme') || 'light';
     document.documentElement.setAttribute('data-theme', savedTheme);
     
     const toggleTheme = () => {
-        const currentTheme = document.documentElement.getAttribute('data-theme') || 'dark';
+        const currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
         const newTheme = currentTheme === 'light' ? 'dark' : 'light';
         document.documentElement.setAttribute('data-theme', newTheme);
         localStorage.setItem('theme', newTheme);
@@ -197,7 +197,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // Project cards interactive 3D tilt and mouse spotlight coordinates
+    // Project cards interactive mouse spotlight coordinates
     const projectCards = document.querySelectorAll('.project-card');
     projectCards.forEach(card => {
         card.addEventListener('mousemove', (e) => {
@@ -205,18 +205,9 @@ document.addEventListener('DOMContentLoaded', () => {
             const x = e.clientX - rect.left;
             const y = e.clientY - rect.top;
             
-            // Set transitions to none during active tracking to eliminate lag and stutter
-            card.style.transition = 'none';
-            
             // Mouse spotlight coordinates
             card.style.setProperty('--mouse-x', `${x}px`);
             card.style.setProperty('--mouse-y', `${y}px`);
-            
-            // 3D Tilt calculation (12 degree rotation max for visible effect)
-            const rotX = ((y / rect.height) * 12 - 6).toFixed(1);
-            const rotY = ((6 - (x / rect.width) * 12)).toFixed(1);
-            
-            card.style.transform = `perspective(1000px) rotateX(${rotX}deg) rotateY(${rotY}deg) translateY(-6px)`;
             
             // Logo glow parallax coordinate
             const glowX = ((x / rect.width) * 20 - 10).toFixed(1);
@@ -226,9 +217,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
         
         card.addEventListener('mouseleave', () => {
-            // Restore smooth transitions on return to center
-            card.style.transition = 'transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.4s ease, background 0.4s ease, box-shadow 0.4s ease';
-            card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) translateY(0)';
             card.style.setProperty('--p-hover-x', '0px');
             card.style.setProperty('--p-hover-y', '0px');
         });
@@ -419,116 +407,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // ==========================================================================
     // INTERACTIVE PARTICLE VORTEX BACKGROUND (LIFTOFF ANIMATION)
-    // ==========================================================================
-    const canvas = document.getElementById('particleCanvas');
-    if (canvas) {
-        const ctx = canvas.getContext('2d');
-        let width = canvas.width = window.innerWidth;
-        let height = canvas.height = window.innerHeight;
 
-        const particleCount = 380;
-        
-        // Define theme-aware color arrays matching Saransh's premium palette (much brighter)
-        const colors = [
-            'rgba(168, 85, 247, 0.85)', // Bright Purple
-            'rgba(59, 130, 246, 0.85)',  // Bright Blue
-            'rgba(147, 51, 234, 0.75)',  // Deep Violet
-            'rgba(96, 165, 250, 0.75)'   // Sky Blue
-        ];
-
-        class Particle {
-            constructor() {
-                this.reset();
-            }
-
-            reset() {
-                // Radial initialization (spawning from center to simulate liftoff burst)
-                this.angle = Math.random() * Math.PI * 2;
-                this.distance = Math.random() * (Math.min(width, height) * 0.45) + 10;
-                this.x = width / 2 + Math.cos(this.angle) * this.distance;
-                this.y = height / 2 + Math.sin(this.angle) * this.distance;
-                
-                this.speed = Math.random() * 1.5 + 0.8;
-                this.size = Math.random() * 2.5 + 1.5;
-                this.color = colors[Math.floor(Math.random() * colors.length)];
-                // Create elongated streaking particles based on speed for depth
-                this.length = Math.random() * 25 + 10;
-                this.opacity = Math.random() * 0.65 + 0.35;
-            }
-
-            update() {
-                // Particle physics: swirl & drift outward radially
-                this.angle += 0.0018; 
-                this.distance += this.speed * 1.25;
-                
-                this.x = width / 2 + Math.cos(this.angle) * this.distance;
-                this.y = height / 2 + Math.sin(this.angle) * this.distance;
-
-                // Fade out as they reach viewport boundaries
-                if (this.distance > Math.max(width, height) * 0.8 || this.x < 0 || this.x > width || this.y < 0 || this.y > height) {
-                    this.reset();
-                }
-            }
-
-            draw() {
-                ctx.save();
-                ctx.globalAlpha = this.opacity;
-                ctx.beginPath();
-                // Draw streaking dash/oval coordinates pointing outward from center
-                const targetX = this.x - Math.cos(this.angle) * this.length;
-                const targetY = this.y - Math.sin(this.angle) * this.length;
-                
-                ctx.strokeStyle = this.color;
-                ctx.lineWidth = this.size;
-                ctx.lineCap = 'round';
-                ctx.moveTo(this.x, this.y);
-                ctx.lineTo(targetX, targetY);
-                ctx.stroke();
-                ctx.restore();
-            }
-        }
-
-        const particles = [];
-        // Initialize particles array
-        for (let i = 0; i < particleCount; i++) {
-            particles.push(new Particle());
-            // Pre-warm distribution so they don't all burst from center at once on page load
-            particles[i].distance = Math.random() * Math.max(width, height) * 0.7;
-        }
-
-        let animationFrameId;
-        function animate() {
-            ctx.clearRect(0, 0, width, height);
-
-            // Fetch dynamic light vs dark theme status to adjust canvas overlay slightly
-            const currentTheme = document.documentElement.getAttribute('data-theme') || 'dark';
-            if (currentTheme === 'light') {
-                ctx.fillStyle = 'rgba(255, 255, 255, 0.05)';
-                ctx.fillRect(0, 0, width, height);
-            }
-
-            particles.forEach(p => {
-                p.update();
-                p.draw();
-            });
-
-            // Adjust flow pattern slightly when cursor moves (Parallax tilt response)
-            let dx = (mouseX - width / 2) * 0.05;
-            let dy = (mouseY - height / 2) * 0.05;
-            canvas.style.transform = `translate3d(${dx}px, ${dy}px, 0)`;
-
-            animationFrameId = requestAnimationFrame(animate);
-        }
-
-        animate();
-
-        // Handle window resizing
-        window.addEventListener('resize', () => {
-            width = canvas.width = window.innerWidth;
-            height = canvas.height = window.innerHeight;
-            particles.forEach(p => p.reset());
-        });
-    }
 
     // ==========================================================================
     // FULL SCREEN DRAWING CANVAS INTERACTION
@@ -580,7 +459,7 @@ document.addEventListener('DOMContentLoaded', () => {
             dCtx.lineTo(e.clientX, e.clientY);
             
             // Glowing neon stroke
-            const currentTheme = document.documentElement.getAttribute('data-theme') || 'dark';
+            const currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
             dCtx.strokeStyle = currentTheme === 'light' ? '#000000' : '#ffffff';
             dCtx.lineWidth = 4;
             dCtx.lineCap = 'round';
@@ -619,4 +498,165 @@ document.addEventListener('DOMContentLoaded', () => {
         window.addEventListener('mouseup', stopDrawing);
         window.addEventListener('mouseleave', stopDrawing);
     }
+
+    // ==========================================================================
+    // DYNAMIC BACKGROUND GEOMETRIC SHAPE GRID
+    // ==========================================================================
+    const bgShapeGrid = document.getElementById('bgShapeGrid');
+    if (bgShapeGrid) {
+        const cellSize = 48;
+        let cols, rows, totalCells;
+        let cells = [];
+
+        const initGrid = () => {
+            bgShapeGrid.innerHTML = '';
+            cells = [];
+            
+            cols = Math.ceil(window.innerWidth / cellSize);
+            rows = Math.ceil(window.innerHeight / cellSize);
+            totalCells = cols * rows;
+            
+            const shapes = ['dot', 'star', 'rect', 'triangle'];
+            
+            for (let i = 0; i < totalCells; i++) {
+                const cell = document.createElement('div');
+                cell.className = 'grid-shape-cell';
+                
+                const shapeType = shapes[Math.floor(Math.random() * shapes.length)];
+                
+                const item = document.createElement('span');
+                item.className = `shape-item shape-${shapeType}`;
+                
+                cell.appendChild(item);
+                bgShapeGrid.appendChild(cell);
+                cells.push(cell);
+            }
+        };
+
+        initGrid();
+
+        let resizeTimeout;
+        window.addEventListener('resize', () => {
+            clearTimeout(resizeTimeout);
+            resizeTimeout = setTimeout(initGrid, 150);
+        });
+
+        // Mouse coordinates map to highlight shapes within a proximity radius of the cursor
+        window.addEventListener('mousemove', (e) => {
+            const mouseX = e.clientX;
+            const mouseY = e.clientY;
+            const radius = 110; // Interaction radius in pixels
+            const checkRadiusCells = 3; // Cell search window limit
+            
+            const centerCol = Math.floor(mouseX / cellSize);
+            const centerRow = Math.floor(mouseY / cellSize);
+            
+            // Clear prior states
+            cells.forEach(c => c.classList.remove('active'));
+            
+            // Highlight cells inside proximity sphere
+            for (let r = centerRow - checkRadiusCells; r <= centerRow + checkRadiusCells; r++) {
+                for (let c = centerCol - checkRadiusCells; c <= centerCol + checkRadiusCells; c++) {
+                    if (c >= 0 && c < cols && r >= 0 && r < rows) {
+                        const index = r * cols + c;
+                        if (index >= 0 && index < cells.length) {
+                            const cell = cells[index];
+                            const cellX = c * cellSize + cellSize / 2;
+                            const cellY = r * cellSize + cellSize / 2;
+                            
+                            const dx = mouseX - cellX;
+                            const dy = mouseY - cellY;
+                            const distance = Math.sqrt(dx * dx + dy * dy);
+                            
+                            if (distance < radius) {
+                                cell.classList.add('active');
+                            }
+                        }
+                    }
+                }
+            }
+        });
+
+        // Remove highlights when cursor leaves viewport
+        window.addEventListener('mouseleave', () => {
+            cells.forEach(c => c.classList.remove('active'));
+        });
+    }
+
+    // ==========================================================================
+    // CUSTOM CURSOR COMPANION SHAPE CYCLE & SECTION TOOLTIPS
+    // ==========================================================================
+    const cursorShape = document.getElementById('cursorShape');
+    if (cursorShape) {
+        const shapeClasses = ['shape-circle', 'shape-triangle', 'shape-star'];
+        let activeShapeIdx = 0;
+        
+        setInterval(() => {
+            cursorShape.classList.remove(shapeClasses[activeShapeIdx]);
+            activeShapeIdx = (activeShapeIdx + 1) % shapeClasses.length;
+            cursorShape.classList.add(shapeClasses[activeShapeIdx]);
+        }, 1000);
+    }
+
+    if (customCursor) {
+        const cursorLabel = customCursor.querySelector('.cursor-label');
+        const sections = document.querySelectorAll('section, footer, header');
+        let typingInterval = null;
+
+        const typeText = (text) => {
+            if (typingInterval) clearInterval(typingInterval);
+            if (!cursorLabel) return;
+            
+            let index = 0;
+            cursorLabel.textContent = '';
+            
+            typingInterval = setInterval(() => {
+                if (index < text.length) {
+                    cursorLabel.textContent = text.slice(0, index + 1) + '|';
+                    index++;
+                } else {
+                    clearInterval(typingInterval);
+                    let showCursor = true;
+                    typingInterval = setInterval(() => {
+                        cursorLabel.textContent = text + (showCursor ? '|' : '');
+                        showCursor = !showCursor;
+                    }, 500);
+                }
+            }, 40);
+        };
+        
+        sections.forEach(sec => {
+            sec.addEventListener('mouseenter', () => {
+                let name = '';
+                const id = sec.id || sec.tagName.toLowerCase();
+                
+                if (id === 'hero') name = 'Saransh Verma';
+                else if (id === 'projects') name = 'Work & Case Studies';
+                else if (id === 'ai-workflow') name = 'Workflow';
+                else if (id === 'approach') name = 'My Process';
+                else if (id === 'contact') name = 'Let\'s Connect';
+                else if (id === 'header') name = 'Menu';
+                else if (id === 'footer') name = 'Footer';
+                else name = id.charAt(0).toUpperCase() + id.slice(1);
+                
+                if (cursorLabel) {
+                    typeText(name);
+                    customCursor.classList.add('cursor-active-profile');
+                }
+            });
+            
+            sec.addEventListener('mouseleave', () => {
+                if (cursorLabel) {
+                    customCursor.classList.remove('cursor-active-profile');
+                    if (typingInterval) {
+                        clearInterval(typingInterval);
+                        typingInterval = null;
+                    }
+                }
+            });
+        });
+    }
+
+
 });
+
