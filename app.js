@@ -656,7 +656,40 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         });
     }
-
+    // Case study cards stacking scroll fallback for Safari/Firefox
+    if (!window.CSS || !CSS.supports || !CSS.supports('animation-timeline', 'view()')) {
+        const cards = document.querySelectorAll('.project-card');
+        if (cards.length) {
+            window.addEventListener('scroll', () => {
+                cards.forEach((card, index) => {
+                    const nextCard = cards[index + 1];
+                    if (nextCard) {
+                        const cardRect = card.getBoundingClientRect();
+                        const nextRect = nextCard.getBoundingClientRect();
+                        
+                        // Calculate overlap percentage
+                        const overlap = Math.max(0, cardRect.bottom - nextRect.top);
+                        const progress = Math.min(1, overlap / cardRect.height);
+                        
+                        const scaleTo = index === 0 ? 0.90 : (index === 1 ? 0.93 : 0.96);
+                        const translateTo = index === 0 ? -30 : (index === 1 ? -20 : -10);
+                        
+                        const currentScale = 1 - (1 - scaleTo) * progress;
+                        const currentTranslate = translateTo * progress;
+                        const currentBrightness = 1 - 0.6 * progress;
+                        
+                        if (overlap > 0) {
+                            card.style.transform = `scale(${currentScale}) translateY(${currentTranslate}px)`;
+                            card.style.filter = `brightness(${currentBrightness})`;
+                        } else {
+                            card.style.transform = '';
+                            card.style.filter = '';
+                        }
+                    }
+                });
+            });
+        }
+    }
 
 });
 
