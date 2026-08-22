@@ -6,12 +6,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const themeToggleBtn = document.getElementById('themeToggle');
     const mobileThemeToggleBtn = document.getElementById('mobileThemeToggle');
     
-    // Check saved theme or default to light
-    const savedTheme = localStorage.getItem('theme') || 'light';
+    // Check saved theme or default to dark
+    const savedTheme = localStorage.getItem('theme') || 'dark';
     document.documentElement.setAttribute('data-theme', savedTheme);
     
     const toggleTheme = () => {
-        const currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
+        const currentTheme = document.documentElement.getAttribute('data-theme') || 'dark';
         const newTheme = currentTheme === 'light' ? 'dark' : 'light';
         document.documentElement.setAttribute('data-theme', newTheme);
         localStorage.setItem('theme', newTheme);
@@ -459,7 +459,7 @@ document.addEventListener('DOMContentLoaded', () => {
             dCtx.lineTo(e.clientX, e.clientY);
             
             // Glowing neon stroke
-            const currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
+            const currentTheme = document.documentElement.getAttribute('data-theme') || 'dark';
             dCtx.strokeStyle = currentTheme === 'light' ? '#000000' : '#ffffff';
             dCtx.lineWidth = 4;
             dCtx.lineCap = 'round';
